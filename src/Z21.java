@@ -1,3 +1,4 @@
+import actions.Z21Action;
 import responses.Z21ResponseListener;
 
 import java.io.IOException;
@@ -19,13 +20,16 @@ public class Z21 implements Runnable{
     public Z21(){
         listenerThread = new Thread(this);
         listenerThread.start();
+
+        //Log on to the z21
     }
 
     /**
      * Used to send the packet to z21.
-     * @param packet Whatever bytes to send.
+     * @param action Action to send.
      */
-    public void sendPacketToZ21(DatagramPacket packet){
+    public void sendPacketToZ21(Z21Action action){
+        DatagramPacket packet = Packetizer.convert(action);
         try {
             InetAddress address = InetAddress.getByName(host);
             packet.setAddress(address);
@@ -45,6 +49,13 @@ public class Z21 implements Runnable{
     public void run() {
         while (!exit){
             //TODO implement listener thread
+            try {
+                DatagramSocket socket = new DatagramSocket();
+                DatagramPacket packet = new DatagramPacket(new byte [510], 510);
+                socket.receive(packet);
+            }catch (IOException e){
+                Logger.getLogger("Z21 Receiver").warning("Failed to get a message from z21... " + e);
+            }
         }
     }
 
@@ -64,5 +75,26 @@ public class Z21 implements Runnable{
         exit = true;
         listenerThread.interrupt();
         //TODO send the LAN_X_LOGOFF packet
+    }
+}
+
+class Packetizer{
+    public static DatagramPacket convert(Z21Action action){
+        byte [] packetContent = toPrimitive((Byte [])action.getByteRepresentation().toArray());
+        DatagramPacket packet = new DatagramPacket(packetContent, action.getByteRepresentation().size());
+        return packet;
+    }
+
+    /**
+     * WTF seriously???
+     * @param in Byte array to primitivize
+     * @return primitivized array
+     */
+    private static byte[] toPrimitive(Byte [] in){
+        byte [] out = new byte [in.length];
+        int i=0;
+        for(Byte b: in)
+            out[i++] = b.byteValue();
+        return out;
     }
 }
