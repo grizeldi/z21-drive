@@ -1,0 +1,5 @@
+package responses;
+
+public enum ResponseTypes {
+    LAN_GET_SERIAL_NUMBER_RESPONSE, LAN_X_GET_VERSION_RESPONSE, LAN_GET_LOCOMODE_RESPONSE
+}
