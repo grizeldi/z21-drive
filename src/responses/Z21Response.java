@@ -8,6 +8,7 @@ import java.util.List;
  */
 public abstract class Z21Response {
     protected List<Byte> byteRepresentation = new ArrayList<Byte>();
+    public ResponseTypes boundType;
 
     public List<Byte> getByteRepresentation() {
         return byteRepresentation;

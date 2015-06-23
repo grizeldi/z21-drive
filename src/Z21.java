@@ -1,4 +1,6 @@
 import actions.Z21Action;
+import actions.Z21ActionLanLogoff;
+import responses.ResponseTypes;
 import responses.Z21ResponseListener;
 
 import java.io.IOException;
@@ -20,16 +22,14 @@ public class Z21 implements Runnable{
     public Z21(){
         listenerThread = new Thread(this);
         listenerThread.start();
-
-        //Log on to the z21
     }
 
     /**
      * Used to send the packet to z21.
      * @param action Action to send.
      */
-    public void sendPacketToZ21(Z21Action action){
-        DatagramPacket packet = Packetizer.convert(action);
+    public boolean sendActionToZ21(Z21Action action){
+        DatagramPacket packet = PacketConverter.convert(action);
         try {
             InetAddress address = InetAddress.getByName(host);
             packet.setAddress(address);
@@ -38,7 +38,9 @@ public class Z21 implements Runnable{
             socket.send(packet);
         }catch (IOException e){
             Logger.getLogger("Z21 sender").warning("Failed to send message to z21... " + e);
+            return false;
         }
+        return true;
     }
 
     /**
@@ -48,9 +50,8 @@ public class Z21 implements Runnable{
     @Override
     public void run() {
         while (!exit){
-            //TODO implement listener thread
             try {
-                DatagramSocket socket = new DatagramSocket();
+                DatagramSocket socket = new DatagramSocket(port);
                 DatagramPacket packet = new DatagramPacket(new byte [510], 510);
                 socket.receive(packet);
             }catch (IOException e){
@@ -74,15 +75,19 @@ public class Z21 implements Runnable{
     public void shutdown(){
         exit = true;
         listenerThread.interrupt();
-        //TODO send the LAN_X_LOGOFF packet
+        sendActionToZ21(new Z21ActionLanLogoff());
     }
 }
 
-class Packetizer{
+class PacketConverter {
     public static DatagramPacket convert(Z21Action action){
         byte [] packetContent = toPrimitive((Byte [])action.getByteRepresentation().toArray());
         DatagramPacket packet = new DatagramPacket(packetContent, action.getByteRepresentation().size());
         return packet;
+    }
+
+    public static ResponseTypes fromPacket(byte [] packet){
+        return null;
     }
 
     /**
