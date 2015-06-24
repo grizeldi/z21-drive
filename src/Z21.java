@@ -1,4 +1,5 @@
 import actions.Z21Action;
+import actions.Z21ActionGetSerialNumber;
 import actions.Z21ActionLanLogoff;
 import broadcasts.BroadcastTypes;
 import broadcasts.Z21Broadcast;
@@ -7,16 +8,21 @@ import broadcasts.Z21BroadcastListener;
 import responses.Z21Response;
 import responses.Z21ResponseListener;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
 /**
  * Main class in this library which represents Z21.
+ * @author grizeldi
  */
 public class Z21 implements Runnable{
     public static final Z21 instance = new Z21();
@@ -26,10 +32,33 @@ public class Z21 implements Runnable{
     private List<Z21ResponseListener> responseListeners = new ArrayList<Z21ResponseListener>();
     private List<Z21BroadcastListener> broadcastListeners = new ArrayList<Z21BroadcastListener>();
     private Thread listenerThread;
+    private DatagramSocket socket;
+    private static final int keepAliveTimeout = 30000;
+    private Timer keepAliveTimer;
 
-    public Z21(){
+    public Z21() {
+        Logger.getLogger("Z21 init").info("Z21 initializing");
         listenerThread = new Thread(this);
         listenerThread.start();
+        try {
+            socket = new DatagramSocket(port);
+        }catch (SocketException e){
+            Logger.getLogger("Z21 init").warning("Failed to open socket to Z21..." + e);
+        }
+        initKeepAliveTimer();
+    }
+
+    private void initKeepAliveTimer(){
+        keepAliveTimer = new Timer(keepAliveTimeout, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sendActionToZ21(new Z21ActionGetSerialNumber());
+            }
+        });
+        keepAliveTimer.stop();
+        keepAliveTimer.setInitialDelay(keepAliveTimeout);
+        keepAliveTimer.setRepeats(true);
+        keepAliveTimer.start();
     }
 
     /**
@@ -42,7 +71,6 @@ public class Z21 implements Runnable{
             InetAddress address = InetAddress.getByName(host);
             packet.setAddress(address);
             packet.setPort(port);
-            DatagramSocket socket = new DatagramSocket();
             socket.send(packet);
         }catch (IOException e){
             Logger.getLogger("Z21 sender").warning("Failed to send message to z21... " + e);
@@ -61,7 +89,6 @@ public class Z21 implements Runnable{
     public void run() {
         while (!exit){
             try {
-                DatagramSocket socket = new DatagramSocket(port);
                 DatagramPacket packet = new DatagramPacket(new byte [510], 510);
                 socket.receive(packet);
                 //Determine if it's a response or a broadcast
@@ -117,6 +144,9 @@ public class Z21 implements Runnable{
     }
 }
 
+/**
+ * Converting packets to objects and back.
+ */
 class PacketConverter {
     public static DatagramPacket convert(Z21Action action){
         byte [] packetContent = toPrimitive((Byte [])action.getByteRepresentation().toArray());
