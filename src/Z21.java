@@ -1,6 +1,8 @@
 import actions.Z21Action;
 import actions.Z21ActionLanLogoff;
+import broadcasts.BroadcastTypes;
 import broadcasts.Z21Broadcast;
+import broadcasts.Z21BroadcastLanXLocoInfo;
 import broadcasts.Z21BroadcastListener;
 import responses.Z21Response;
 import responses.Z21ResponseListener;
@@ -52,6 +54,8 @@ public class Z21 implements Runnable{
     /**
      * Used as a listener for any packets sent by Z21.
      * Also delivers packets to responseListeners.
+     * @see Z21ResponseListener
+     * @see Z21BroadcastListener
      */
     @Override
     public void run() {
@@ -66,7 +70,18 @@ public class Z21 implements Runnable{
                     //TODO deliver the response to listeners
                 }else {
                     Z21Broadcast broadcast = PacketConverter.broadcastFromPacket(packet);
-                    //TODO deliver the broadcast to listeners
+                    //Narrow the class definition
+                    if (broadcast.boundType == Z21ResponseAndBroadcastCollection.lanXLocoInfo.boundType){
+                        //It's a loco info broadcast
+                        Z21BroadcastLanXLocoInfo z21BroadcastLanXLocoInfo = (Z21BroadcastLanXLocoInfo) broadcast;
+                        //Deliver the broadcast
+                        for (Z21BroadcastListener listener : broadcastListeners){
+                            for (BroadcastTypes type : listener.getListenerTypes()){
+                                if (type == BroadcastTypes.LAN_X_LOCO_INFO)
+                                    listener.onBroadCast(BroadcastTypes.LAN_X_LOCO_INFO, z21BroadcastLanXLocoInfo);
+                            }
+                        }
+                    }
                 }
             }catch (IOException e){
                 Logger.getLogger("Z21 Receiver").warning("Failed to get a message from z21... " + e);
@@ -122,11 +137,16 @@ class PacketConverter {
 
     /**
      * Same as for responses, but for broadcasts. See method responseFromPacket(DatagramPacket packet).
-     * @param packet UDP packet recieved from Z21
+     * @param packet UDP packet received from Z21
      * @return Z21 broadcast object which represents the broadcast sent from Z21.
      */
-    @Deprecated //Unfinished
+    //TODO add more broadcast types
     public static Z21Broadcast broadcastFromPacket(DatagramPacket packet){
+        byte [] data = packet.getData();
+        byte header1 = data[2], header2 = data[3];
+        if (header1 == 0 && header2 == 40){
+            return new Z21BroadcastLanXLocoInfo(data);
+        }
         return null;
     }
 
