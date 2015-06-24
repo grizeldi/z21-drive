@@ -1,16 +1,17 @@
 package responses;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * Represents a response from z21.
+ * Base class for Z21 responses.
  */
 public abstract class Z21Response {
-    protected List<Byte> byteRepresentation = new ArrayList<Byte>();
+    protected byte [] byteRepresentation;
     public ResponseTypes boundType;
 
-    public List<Byte> getByteRepresentation() {
+    public Z21Response(byte [] initArray){
+        byteRepresentation = initArray;
+    }
+
+    public byte[] getByteRepresentation() {
         return byteRepresentation;
     }
 }
