@@ -5,7 +5,9 @@ import broadcasts.BroadcastTypes;
 import broadcasts.Z21Broadcast;
 import broadcasts.Z21BroadcastLanXLocoInfo;
 import broadcasts.Z21BroadcastListener;
+import responses.ResponseTypes;
 import responses.Z21Response;
+import responses.Z21ResponseGetSerialNumber;
 import responses.Z21ResponseListener;
 
 import javax.swing.*;
@@ -94,7 +96,18 @@ public class Z21 implements Runnable{
                 //Determine if it's a response or a broadcast
                 if (PacketConverter.responseFromPacket(packet) != null){
                     Z21Response response = PacketConverter.responseFromPacket(packet);
-                    //TODO deliver the response to listeners
+                    //Narrow the class definition
+                    if (response.boundType == Z21ResponseAndBroadcastCollection.getSerialNumber.boundType){
+                        //It's a serial number
+                        Z21ResponseGetSerialNumber z21ResponseGetSerialNumber = (Z21ResponseGetSerialNumber) response;
+                        //Deliver it
+                        for (Z21ResponseListener listener : responseListeners){
+                            for (ResponseTypes type : listener.getListenerTypes()){
+                                if (type == ResponseTypes.LAN_X_GET_VERSION_RESPONSE)
+                                    listener.responseReceived(ResponseTypes.LAN_X_GET_VERSION_RESPONSE, z21ResponseGetSerialNumber);
+                            }
+                        }
+                    }
                 }else {
                     Z21Broadcast broadcast = PacketConverter.broadcastFromPacket(packet);
                     //Narrow the class definition
@@ -158,10 +171,12 @@ class PacketConverter {
      * @param packet UDP packet received from Z21
      * @return Z21 response object which represents the byte array.
      */
-    @Deprecated //Unfinished
+    //TODO add more response types
     public static Z21Response responseFromPacket(DatagramPacket packet){
         byte [] array = packet.getData();
         byte header1 = array[2], header2 = array[3];
+        if (header1 == 0 && header2 == 10)
+            return new Z21ResponseGetSerialNumber(array);
         return null;
     }
 
