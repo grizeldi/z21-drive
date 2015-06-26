@@ -23,7 +23,10 @@ public class Z21BroadcastLanXLocoInfo extends Z21Broadcast{
     }
 
     private void populateFields(){
-        //TODO add loco address
+        byte adr_MSB = byteRepresentation [5];
+        byte adr_LSB = byteRepresentation [6];
+        locoAddress = (adr_MSB & 0x3F) << 8 + adr_LSB;
+
         boolean [] db2bits = fromByte(byteRepresentation[7]);
         locoInUse = db2bits[4];
         if (!db2bits[5] && !db2bits[6] && !db2bits[7])

@@ -6,8 +6,8 @@ package actions;
 public class Z21ActionLanLogoff extends Z21Action{
 
     public Z21ActionLanLogoff(){
-        byteRepresentation.add(Byte.decode("0"));
-        byteRepresentation.add(Byte.decode("30"));
+        byteRepresentation.add(Byte.decode("0x30"));
+        byteRepresentation.add(Byte.decode("0x00"));
         addLenByte();
     }
 

@@ -175,7 +175,7 @@ class PacketConverter {
     public static Z21Response responseFromPacket(DatagramPacket packet){
         byte [] array = packet.getData();
         byte header1 = array[2], header2 = array[3];
-        if (header1 == 0 && header2 == 10)
+        if (header1 == 0x10 && header2 == 0x00)
             return new Z21ResponseGetSerialNumber(array);
         return null;
     }
@@ -189,7 +189,7 @@ class PacketConverter {
     public static Z21Broadcast broadcastFromPacket(DatagramPacket packet){
         byte [] data = packet.getData();
         byte header1 = data[2], header2 = data[3];
-        if (header1 == 0 && header2 == 40){
+        if (header1 == 0x40 && header2 == 0x00){
             return new Z21BroadcastLanXLocoInfo(data);
         }
         return null;
