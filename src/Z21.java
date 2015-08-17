@@ -189,7 +189,8 @@ class PacketConverter {
     public static Z21Broadcast broadcastFromPacket(DatagramPacket packet){
         byte [] data = packet.getData();
         byte header1 = data[2], header2 = data[3];
-        if (header1 == 0x40 && header2 == 0x00){
+        int xHeader = data[4] & 255;
+        if (header1 == 0x40 && header2 == 0x00 && xHeader == 239){
             return new Z21BroadcastLanXLocoInfo(data);
         }
         return null;
