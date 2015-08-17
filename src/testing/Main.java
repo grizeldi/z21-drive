@@ -30,5 +30,11 @@ public class Main implements Runnable{
 
     public void run(){
         //TODO add run code
+        //THIS IS NOT HERE, OK?
+        /*boolean [] bool = new boolean[]{false, true, true, true, true, true, true, true};
+        byte b = (byte)((bool[0]?1<<7:0) + (bool[1]?1<<6:0) + (bool[2]?1<<5:0) +
+                (bool[3]?1<<4:0) + (bool[4]?1<<3:0) + (bool[5]?1<<2:0) +
+                (bool[6]?1<<1:0) + (bool[7]?1:0));
+        System.out.println(b);*/
     }
 }
