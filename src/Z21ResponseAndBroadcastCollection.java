@@ -7,6 +7,5 @@ import responses.Z21ResponseGetSerialNumber;
  */
 class Z21ResponseAndBroadcastCollection {
     public static final Z21BroadcastLanXLocoInfo lanXLocoInfo = new Z21BroadcastLanXLocoInfo(null);
-
     public static final Z21ResponseGetSerialNumber getSerialNumber = new Z21ResponseGetSerialNumber(null);
 }
