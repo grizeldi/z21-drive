@@ -26,6 +26,6 @@ public abstract class Z21Action {
         byte len = (byte) byteRepresentation.size();
         len += 2;
         byteRepresentation.add(0, (byte) 0);
-        byteRepresentation.add(1, len);
+        byteRepresentation.add(0, len);
     }
 }

@@ -135,6 +135,11 @@ public class Z21BroadcastLanXLocoInfo extends Z21Broadcast{
         return f12On;
     }
 
+    /**
+     * Array of all function values.
+     * Because I was lazy it contains just functions from F0 to F4.
+     * @return Array of function values.
+     */
     public boolean [] getFunctionsAsArray(){
         boolean [] array = new boolean[5];
         array [0] = f0On;
