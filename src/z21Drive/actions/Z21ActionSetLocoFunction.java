@@ -1,15 +1,19 @@
-package actions;
+package z21Drive.actions;
+
+import z21Drive.LocoAddressOutOfRangeException;
 
 /**
  * Sent to z21 to change a loco function. Supports functions from F0 to F12.
  * With some more work it could be made to allow use of more functions.
+ * Supports loco addresses from 1 to 63.
  */
 //TODO unfinished
 public class Z21ActionSetLocoFunction extends Z21Action{
-
-    public Z21ActionSetLocoFunction(int locoAddress, byte functionNo, boolean on) {
+    public Z21ActionSetLocoFunction(int locoAddress, byte functionNo, boolean on) throws LocoAddressOutOfRangeException{
         byteRepresentation.add(Byte.decode("0x40"));
         byteRepresentation.add(Byte.decode("0x00"));
+        if (locoAddress < 1 || (locoAddress > 63 && locoAddress < 128))
+            throw new LocoAddressOutOfRangeException(locoAddress);
         addDataToByteRepresentation(new Object[]{Integer.valueOf(locoAddress), functionNo, Boolean.valueOf(on)});
         addLenByte();
     }

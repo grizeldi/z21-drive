@@ -1,14 +1,16 @@
-import actions.Z21Action;
-import actions.Z21ActionGetSerialNumber;
-import actions.Z21ActionLanLogoff;
-import broadcasts.BroadcastTypes;
-import broadcasts.Z21Broadcast;
-import broadcasts.Z21BroadcastLanXLocoInfo;
-import broadcasts.Z21BroadcastListener;
-import responses.ResponseTypes;
-import responses.Z21Response;
-import responses.Z21ResponseGetSerialNumber;
-import responses.Z21ResponseListener;
+package z21Drive;
+
+import z21Drive.actions.Z21Action;
+import z21Drive.actions.Z21ActionGetSerialNumber;
+import z21Drive.actions.Z21ActionLanLogoff;
+import z21Drive.broadcasts.BroadcastTypes;
+import z21Drive.broadcasts.Z21Broadcast;
+import z21Drive.broadcasts.Z21BroadcastLanXLocoInfo;
+import z21Drive.broadcasts.Z21BroadcastListener;
+import z21Drive.responses.ResponseTypes;
+import z21Drive.responses.Z21Response;
+import z21Drive.responses.Z21ResponseGetSerialNumber;
+import z21Drive.responses.Z21ResponseListener;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

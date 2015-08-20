@@ -1,4 +1,4 @@
-package testing;
+package z21Drive.testing;
 
 public class Main implements Runnable{
 
@@ -38,6 +38,11 @@ public class Main implements Runnable{
         System.out.println(b);*/
 
         byte Adr_MSB = 10, Adr_LSB = -1;
+        System.out.println((Adr_MSB & 0x3F) << (8 + Adr_LSB));
+
+        int x = 0;
+        Adr_MSB = (byte)x;
+        Adr_LSB = (byte)24;
         System.out.println((Adr_MSB & 0x3F) << (8 + Adr_LSB));
     }
 }

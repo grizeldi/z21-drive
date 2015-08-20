@@ -1,4 +1,4 @@
-package responses;
+package z21Drive.responses;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

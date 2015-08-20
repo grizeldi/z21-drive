@@ -1,4 +1,4 @@
-package broadcasts;
+package z21Drive.broadcasts;
 
 /**
  * Probably the most important broadcast, because it represents the current state of a loco.

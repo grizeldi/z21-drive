@@ -1,4 +1,4 @@
-package broadcasts;
+package z21Drive.broadcasts;
 
 /**
  * Represents all messages that all clients get.

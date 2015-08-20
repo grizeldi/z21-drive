@@ -1,4 +1,4 @@
-package actions;
+package z21Drive.actions;
 
 @Deprecated //TODO unfinished
 public class Z21ActionGetLocoInfo extends Z21Action{

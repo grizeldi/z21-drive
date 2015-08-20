@@ -1,20 +1,23 @@
-package responses;
+package z21Drive.broadcasts;
 
 /**
- * Base class for Z21 responses.
+ * Base class for Z21 broadcasts.
  */
-public abstract class Z21Response {
+public abstract class Z21Broadcast {
     protected byte [] byteRepresentation;
-    public ResponseTypes boundType;
+    public BroadcastTypes boundType;
 
-    public Z21Response(byte [] initArray){
+    public Z21Broadcast(byte [] initArray){
         byteRepresentation = initArray;
     }
 
-    public byte[] getByteRepresentation() {
-        return byteRepresentation;
-    }
+    public byte [] getByteRepresentation(){return byteRepresentation;}
 
+    /**
+     * Converts byte to bits
+     * @param x byte to convert
+     * @return array of bits
+     */
     protected boolean [] fromByte(byte x){
         boolean bs[] = new boolean[8];
         bs[0] = ((x & 0x01) != 0);

@@ -1,5 +1,7 @@
-import broadcasts.Z21BroadcastLanXLocoInfo;
-import responses.Z21ResponseGetSerialNumber;
+package z21Drive;
+
+import z21Drive.broadcasts.Z21BroadcastLanXLocoInfo;
+import z21Drive.responses.Z21ResponseGetSerialNumber;
 
 /**
  * Used as a collection of dummy objects for comparing responses and broadcasts with ones received from Z21.

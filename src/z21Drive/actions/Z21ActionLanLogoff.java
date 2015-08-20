@@ -1,4 +1,4 @@
-package actions;
+package z21Drive.actions;
 
 /**
  * Used to log off from z21 when shutting down the app.
