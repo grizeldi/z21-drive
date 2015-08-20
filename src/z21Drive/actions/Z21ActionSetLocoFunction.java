@@ -11,7 +11,7 @@ public class Z21ActionSetLocoFunction extends Z21Action{
     public Z21ActionSetLocoFunction(int locoAddress, byte functionNo, boolean on) throws LocoAddressOutOfRangeException{
         byteRepresentation.add(Byte.decode("0x40"));
         byteRepresentation.add(Byte.decode("0x00"));
-        if (locoAddress < 1 || (locoAddress > 63 && locoAddress < 128))
+        if (locoAddress < 1 || locoAddress > 63)
             throw new LocoAddressOutOfRangeException(locoAddress);
         addDataToByteRepresentation(new Object[]{Integer.valueOf(locoAddress), functionNo, Boolean.valueOf(on)});
         addLenByte();
