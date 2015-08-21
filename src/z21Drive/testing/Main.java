@@ -46,19 +46,6 @@ public class Main implements Runnable{
                     for (byte b : bc.getByteRepresentation())
                         System.out.print(b + " ");
                     System.out.println("Array length: " + bc.getByteRepresentation().length);
-                    final Z21BroadcastListener b = this;
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                Thread.sleep(5000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                            z21.removeBroadcastListener(b);
-                            z21.shutdown();
-                        }
-                    }).start();
                 }
             }
 
@@ -67,10 +54,20 @@ public class Main implements Runnable{
                 return new BroadcastTypes[]{BroadcastTypes.LAN_X_LOCO_INFO};
             }
         });
-        try {
-            z21.sendActionToZ21(new Z21ActionGetLocoInfo(5));
-        } catch (LocoAddressOutOfRangeException e) {
-            e.printStackTrace();
-        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        z21.sendActionToZ21(new Z21ActionGetLocoInfo(5));
+                        Thread.sleep(3000);
+                    } catch (LocoAddressOutOfRangeException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
     }
 }

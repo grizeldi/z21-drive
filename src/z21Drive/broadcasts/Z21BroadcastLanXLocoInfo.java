@@ -12,7 +12,7 @@ public class Z21BroadcastLanXLocoInfo extends Z21Broadcast{
      * true = forward, false = backward
      */
     private boolean direction;
-    private byte speed;
+    private int speed;
     private boolean f0On, f1On, f2On, f3On, f4On, f5On, f6On, f7On, f8On, f9On, f10On, f11On, f12On;
 
     public Z21BroadcastLanXLocoInfo(byte[] initArray) {
@@ -29,20 +29,27 @@ public class Z21BroadcastLanXLocoInfo extends Z21Broadcast{
 
         boolean [] db2bits = fromByte(byteRepresentation[7]);
         locoInUse = db2bits[4];
-        if (!db2bits[5] && !db2bits[6] && !db2bits[7])
+        String binary = String.format("%8s", Integer.toBinaryString(byteRepresentation[7])).replace(' ', '0');
+        if (binary.equals("00000000") || binary.equals("00001000"))
             speedSteps = 14;
-        if (!db2bits[5] && db2bits[6] && !db2bits[7])
+        else if (binary.equals("00000010") || binary.equals("00001010"))
             speedSteps = 28;
-        if (db2bits[5] && !db2bits[6] && !db2bits[7])
+        else if (binary.equals("00000100") || binary.equals("00001100"))
             speedSteps = 128;
 
         boolean [] db3bits = fromByte(byteRepresentation[8]);
         direction = db3bits[0];
         boolean [] speedArray = db3bits.clone();
         speedArray [0] = false;
-        speed = (byte)((speedArray[0]?1<<7:0) + (speedArray[1]?1<<6:0) + (speedArray[2]?1<<5:0) +
+        /*speed = (byte)((speedArray[0]?1<<7:0) + (speedArray[1]?1<<6:0) + (speedArray[2]?1<<5:0) +
                 (speedArray[3]?1<<4:0) + (speedArray[4]?1<<3:0) + (speedArray[5]?1<<2:0) +
-                (speedArray[6]?1<<1:0) + (speedArray[7]?1:0));
+                (speedArray[6]?1<<1:0) + (speedArray[7]?1:0));*/
+
+        for (int i = 0; i < speedArray.length; i++) {
+            if (speedArray[i]) {
+                speed |= 1 << i;
+            }
+        }
 
         boolean [] db4bits = fromByte(byteRepresentation[9]);
         f0On = db4bits[3];
@@ -79,7 +86,7 @@ public class Z21BroadcastLanXLocoInfo extends Z21Broadcast{
         return direction;
     }
 
-    public byte getSpeed() {
+    public int getSpeed() {
         return speed;
     }
 
