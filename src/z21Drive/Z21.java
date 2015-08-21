@@ -43,12 +43,12 @@ public class Z21 implements Runnable{
     public Z21() {
         Logger.getLogger("Z21 init").info("Z21 initializing");
         listenerThread = new Thread(this);
-        listenerThread.start();
         try {
             socket = new DatagramSocket(port);
         }catch (SocketException e){
             Logger.getLogger("Z21 init").warning("Failed to open socket to Z21..." + e);
         }
+        listenerThread.start();
         initKeepAliveTimer();
     }
 
@@ -129,6 +129,7 @@ public class Z21 implements Runnable{
                 Logger.getLogger("Z21 Receiver").warning("Failed to get a message from z21... " + e);
             }
         }
+        socket.close();
     }
 
     public void addResponseListener(Z21ResponseListener listener){
@@ -164,7 +165,7 @@ public class Z21 implements Runnable{
  */
 class PacketConverter {
     public static DatagramPacket convert(Z21Action action){
-        byte [] packetContent = toPrimitive((Byte [])action.getByteRepresentation().toArray());
+        byte [] packetContent = toPrimitive(action.getByteRepresentation().toArray(new Byte [0]));
         return new DatagramPacket(packetContent, action.getByteRepresentation().size());
     }
 
@@ -192,8 +193,12 @@ class PacketConverter {
         byte [] data = packet.getData();
         byte header1 = data[2], header2 = data[3];
         int xHeader = data[4] & 255;
+        byte [] newArray = new byte[data[0]];
+        for (int i = 0; i < newArray.length; i++)
+            newArray[i] = data[i];
+
         if (header1 == 0x40 && header2 == 0x00 && xHeader == 239){
-            return new Z21BroadcastLanXLocoInfo(data);
+            return new Z21BroadcastLanXLocoInfo(newArray);
         }
         return null;
     }

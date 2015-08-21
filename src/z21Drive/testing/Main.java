@@ -1,32 +1,19 @@
 package z21Drive.testing;
 
+import z21Drive.LocoAddressOutOfRangeException;
+import z21Drive.Z21;
+import z21Drive.actions.Z21ActionGetLocoInfo;
+import z21Drive.broadcasts.BroadcastTypes;
+import z21Drive.broadcasts.Z21Broadcast;
+import z21Drive.broadcasts.Z21BroadcastLanXLocoInfo;
+import z21Drive.broadcasts.Z21BroadcastListener;
+
 public class Main implements Runnable{
 
     public static void main(String[] args) {
         //Start things up
         new Thread(new Main()).start();
     }
-
-    /*public void run(){
-        JFrame frame = new JFrame("Z21 Test Console");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JTextField textField = new JTextField();
-        textField.setColumns(20);
-
-        JTextArea textArea = new JTextArea();
-        //textArea.setPreferredSize(new Dimension(200, 100));
-
-        JPanel textEntry = new JPanel();
-        textEntry.add(textField);
-        textEntry.add(new JButton("Send"));
-
-        frame.add(textArea);
-        frame.add(textEntry);
-
-        frame.pack();
-        frame.setVisible(true);
-    }*/
 
     public void run(){
         //TODO add run code
@@ -37,12 +24,53 @@ public class Main implements Runnable{
                 (bool[6]?1<<1:0) + (bool[7]?1:0));
         System.out.println(b);*/
 
-        byte Adr_MSB = 10, Adr_LSB = -1;
+        /*byte Adr_MSB = 10, Adr_LSB = -1;
         System.out.println((Adr_MSB & 0x3F) << (8 + Adr_LSB));
 
         int x = 0;
         Adr_MSB = (byte)x;
         Adr_LSB = (byte)24;
-        System.out.println((Adr_MSB & 0x3F) << (8 + Adr_LSB));
+        System.out.println((Adr_MSB & 0x3F) << (8 + Adr_LSB));*/
+
+        final Z21 z21 = Z21.instance;
+        z21.addBroadcastListener(new Z21BroadcastListener() {
+            @Override
+            public void onBroadCast(BroadcastTypes type, Z21Broadcast broadcast) {
+                if (type == BroadcastTypes.LAN_X_LOCO_INFO){
+                    Z21BroadcastLanXLocoInfo bc = (Z21BroadcastLanXLocoInfo) broadcast;
+                    System.out.println("Loco address: " + bc.getLocoAddress());
+                    System.out.println("Lights : " + bc.isF1On());
+                    System.out.println("Speed steps : " + bc.getSpeedSteps());
+                    System.out.println("Speed : " + bc.getSpeed());
+                    System.out.println("Raw data:");
+                    for (byte b : bc.getByteRepresentation())
+                        System.out.print(b + " ");
+                    System.out.println("Array length: " + bc.getByteRepresentation().length);
+                    final Z21BroadcastListener b = this;
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                Thread.sleep(5000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            z21.removeBroadcastListener(b);
+                            z21.shutdown();
+                        }
+                    }).start();
+                }
+            }
+
+            @Override
+            public BroadcastTypes[] getListenerTypes() {
+                return new BroadcastTypes[]{BroadcastTypes.LAN_X_LOCO_INFO};
+            }
+        });
+        try {
+            z21.sendActionToZ21(new Z21ActionGetLocoInfo(5));
+        } catch (LocoAddressOutOfRangeException e) {
+            e.printStackTrace();
+        }
     }
 }
