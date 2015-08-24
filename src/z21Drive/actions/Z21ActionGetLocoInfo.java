@@ -39,10 +39,6 @@ public class Z21ActionGetLocoInfo extends Z21Action{
             Adr_MSB = (byte) Integer.parseInt(binaryMSB, 2);
         Adr_LSB = (byte) Integer.parseInt(binaryLSB, 2);
 
-        System.out.println("Array length: " + binary.toCharArray().length);
-        System.out.println("MSB: " + binaryMSB);
-        System.out.println("LSB: " + binaryLSB);
-
         byteRepresentation.add(Adr_MSB);
         byteRepresentation.add(Adr_LSB);
         byteRepresentation.add((byte) (byteRepresentation.get(2) ^ byteRepresentation.get(3) ^ byteRepresentation.get(4) ^ byteRepresentation.get(5)));
