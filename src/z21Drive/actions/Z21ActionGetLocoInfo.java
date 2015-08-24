@@ -4,7 +4,7 @@ import z21Drive.LocoAddressOutOfRangeException;
 
 /**
  * Used to retrieve loco status from z21.
- * Supports loco addresses up to 63.
+ * Supports loco addresses up to 128.
  */
 public class Z21ActionGetLocoInfo extends Z21Action{
 
@@ -26,8 +26,23 @@ public class Z21ActionGetLocoInfo extends Z21Action{
         //Add all the data
         byteRepresentation.add((byte)(int)Integer.decode("0xE3"));
         byteRepresentation.add((byte)(int)Integer.decode("0xF0"));
-        byte Adr_MSB = (byte)(int)(Integer)objs[0];
-        byte Adr_LSB = (byte)24;
+        byte Adr_MSB;
+        byte Adr_LSB;
+        //Made working in attempt number 3
+        String binary = String.format("%16s", Integer.toBinaryString((Integer) objs[0])).replace(' ', '0');
+        String binaryMSB = binary.substring(0, 8);
+        String binaryLSB = binary.substring(8);
+
+        if (binary.replaceFirst ("^0*", "").toCharArray().length <= 8)
+            Adr_MSB = 0;
+        else
+            Adr_MSB = (byte) Integer.parseInt(binaryMSB, 2);
+        Adr_LSB = (byte) Integer.parseInt(binaryLSB, 2);
+
+        System.out.println("Array length: " + binary.toCharArray().length);
+        System.out.println("MSB: " + binaryMSB);
+        System.out.println("LSB: " + binaryLSB);
+
         byteRepresentation.add(Adr_MSB);
         byteRepresentation.add(Adr_LSB);
         byteRepresentation.add((byte) (byteRepresentation.get(2) ^ byteRepresentation.get(3) ^ byteRepresentation.get(4) ^ byteRepresentation.get(5)));

@@ -54,20 +54,10 @@ public class Main implements Runnable{
                 return new BroadcastTypes[]{BroadcastTypes.LAN_X_LOCO_INFO};
             }
         });
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    try {
-                        z21.sendActionToZ21(new Z21ActionGetLocoInfo(5));
-                        Thread.sleep(3000);
-                    } catch (LocoAddressOutOfRangeException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }).start();
+        try {
+            z21.sendActionToZ21(new Z21ActionGetLocoInfo(5));
+        } catch (LocoAddressOutOfRangeException e) {
+            e.printStackTrace();
+        }
     }
 }

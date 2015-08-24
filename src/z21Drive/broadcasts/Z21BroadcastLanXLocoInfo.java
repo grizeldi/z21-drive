@@ -25,7 +25,7 @@ public class Z21BroadcastLanXLocoInfo extends Z21Broadcast{
     private void populateFields(){
         byte adr_MSB = byteRepresentation [5];
         byte adr_LSB = byteRepresentation [6];
-        locoAddress = (adr_MSB & 0x3F) << 8 + adr_LSB;
+        locoAddress = (adr_MSB & 0x3F) << 8 | adr_LSB;
 
         boolean [] db2bits = fromByte(byteRepresentation[7]);
         locoInUse = db2bits[4];
@@ -41,15 +41,9 @@ public class Z21BroadcastLanXLocoInfo extends Z21Broadcast{
         direction = db3bits[0];
         boolean [] speedArray = db3bits.clone();
         speedArray [0] = false;
-        /*speed = (byte)((speedArray[0]?1<<7:0) + (speedArray[1]?1<<6:0) + (speedArray[2]?1<<5:0) +
+        speed = ((speedArray[0]?1<<7:0) + (speedArray[1]?1<<6:0) + (speedArray[2]?1<<5:0) +
                 (speedArray[3]?1<<4:0) + (speedArray[4]?1<<3:0) + (speedArray[5]?1<<2:0) +
-                (speedArray[6]?1<<1:0) + (speedArray[7]?1:0));*/
-
-        for (int i = 0; i < speedArray.length; i++) {
-            if (speedArray[i]) {
-                speed |= 1 << i;
-            }
-        }
+                (speedArray[6]?1<<1:0) + (speedArray[7]?1:0));
 
         boolean [] db4bits = fromByte(byteRepresentation[9]);
         f0On = db4bits[3];
