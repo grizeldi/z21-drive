@@ -19,7 +19,10 @@ public abstract class Z21Broadcast {
      * @return array of bits
      */
     protected boolean [] fromByte(byte x){
-        char [] binary = String.format("%8s", Integer.toBinaryString(x)).replace(' ', '0').toCharArray();
+        String binaryString = String.format("%8s", Integer.toString(x, 2)).replace(' ', '0');
+        if (binaryString.charAt(1) == '1')
+            binaryString = binaryString.replace("-", "");
+        char [] binary = binaryString.toCharArray();
         boolean bs[] = new boolean[8];
         for (int i = 0; i < binary.length; i++){
             if (binary[i] == '0')

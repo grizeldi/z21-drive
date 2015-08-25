@@ -38,8 +38,12 @@ public class Z21BroadcastLanXLocoInfo extends Z21Broadcast{
             speedSteps = 128;
 
         boolean [] db3bits = fromByte(byteRepresentation[8]);
-        direction = db3bits[0];
+        direction = byteRepresentation[8] < 0;
         boolean [] speedArray = db3bits.clone();
+
+        if (direction) {
+            speedArray = fromByte((byte) (byteRepresentation[8] + 128));
+        }
         speedArray [0] = false;
         speed = ((speedArray[0]?1<<7:0) + (speedArray[1]?1<<6:0) + (speedArray[2]?1<<5:0) +
                 (speedArray[3]?1<<4:0) + (speedArray[4]?1<<3:0) + (speedArray[5]?1<<2:0) +
@@ -76,6 +80,11 @@ public class Z21BroadcastLanXLocoInfo extends Z21Broadcast{
         return speedSteps;
     }
 
+    /**
+     * Represents direction in which loco is driving.
+     * true = forward, false = backward
+     * @return boolean following those rules
+     */
     public boolean getDirection() {
         return direction;
     }
@@ -138,16 +147,23 @@ public class Z21BroadcastLanXLocoInfo extends Z21Broadcast{
 
     /**
      * Array of all function values.
-     * Because I was lazy it contains just functions from F0 to F4.
      * @return Array of function values.
      */
     public boolean [] getFunctionsAsArray(){
-        boolean [] array = new boolean[5];
+        boolean [] array = new boolean[13];
         array [0] = f0On;
         array [1] = f1On;
         array [2] = f2On;
         array [3] = f3On;
         array [4] = f4On;
+        array [5] = f5On;
+        array [6] = f6On;
+        array [7] = f7On;
+        array [8] = f8On;
+        array [9] = f9On;
+        array [10] = f10On;
+        array [11] = f11On;
+        array [12] = f12On;
         return array;
     }
 }

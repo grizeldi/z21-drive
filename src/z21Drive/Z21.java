@@ -40,7 +40,7 @@ public class Z21 implements Runnable{
     private static final int keepAliveTimeout = 30000;
     private Timer keepAliveTimer;
 
-    public Z21() {
+    private Z21() {
         Logger.getLogger("Z21 init").info("Z21 initializing");
         listenerThread = new Thread(this);
         try {
@@ -68,6 +68,7 @@ public class Z21 implements Runnable{
     /**
      * Used to send the packet to z21.
      * @param action Action to send.
+     * @return returns true if action is sent successfully and false if it fails
      */
     public boolean sendActionToZ21(Z21Action action){
         DatagramPacket packet = PacketConverter.convert(action);
@@ -157,6 +158,13 @@ public class Z21 implements Runnable{
         exit = true;
         listenerThread.interrupt();
         sendActionToZ21(new Z21ActionLanLogoff());
+        Logger.getLogger("Z21").info("Shutting down all communication.");
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        shutdown();
+        super.finalize();
     }
 }
 
@@ -194,8 +202,7 @@ class PacketConverter {
         byte header1 = data[2], header2 = data[3];
         int xHeader = data[4] & 255;
         byte [] newArray = new byte[data[0]];
-        for (int i = 0; i < newArray.length; i++)
-            newArray[i] = data[i];
+        System.arraycopy(data, 0, newArray, 0, newArray.length);
 
         if (header1 == 0x40 && header2 == 0x00 && xHeader == 239){
             return new Z21BroadcastLanXLocoInfo(newArray);
