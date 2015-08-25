@@ -3,10 +3,7 @@ package z21Drive;
 import z21Drive.actions.Z21Action;
 import z21Drive.actions.Z21ActionGetSerialNumber;
 import z21Drive.actions.Z21ActionLanLogoff;
-import z21Drive.broadcasts.BroadcastTypes;
-import z21Drive.broadcasts.Z21Broadcast;
-import z21Drive.broadcasts.Z21BroadcastLanXLocoInfo;
-import z21Drive.broadcasts.Z21BroadcastListener;
+import z21Drive.broadcasts.*;
 import z21Drive.responses.ResponseTypes;
 import z21Drive.responses.Z21Response;
 import z21Drive.responses.Z21ResponseGetSerialNumber;
@@ -49,6 +46,20 @@ public class Z21 implements Runnable{
             Logger.getLogger("Z21 init").warning("Failed to open socket to Z21..." + e);
         }
         listenerThread.start();
+        addBroadcastListener(new Z21BroadcastListener() {
+            @Override
+            public void onBroadCast(BroadcastTypes type, Z21Broadcast broadcast) {
+                if (type == BroadcastTypes.LAN_X_UNKNOWN_COMMAND)
+                    Logger.getLogger("Z21 monitor").warning("Z21 reported receiving an unknown command.");
+                else
+                    Logger.getLogger("Z21 monitor").severe("Broadcast delivery messed up. Please report immediately to gitHub issues what have you done.");
+            }
+
+            @Override
+            public BroadcastTypes[] getListenerTypes() {
+                return new BroadcastTypes[]{BroadcastTypes.LAN_X_UNKNOWN_COMMAND};
+            }
+        });
         initKeepAliveTimer();
     }
 
@@ -117,11 +128,19 @@ public class Z21 implements Runnable{
                     if (broadcast.boundType == Z21ResponseAndBroadcastCollection.lanXLocoInfo.boundType){
                         //It's a loco info broadcast
                         Z21BroadcastLanXLocoInfo z21BroadcastLanXLocoInfo = (Z21BroadcastLanXLocoInfo) broadcast;
-                        //Deliver the broadcast
                         for (Z21BroadcastListener listener : broadcastListeners){
                             for (BroadcastTypes type : listener.getListenerTypes()){
                                 if (type == BroadcastTypes.LAN_X_LOCO_INFO)
                                     listener.onBroadCast(BroadcastTypes.LAN_X_LOCO_INFO, z21BroadcastLanXLocoInfo);
+                            }
+                        }
+                    }else if (broadcast.boundType == Z21ResponseAndBroadcastCollection.lanXUnknownCommand.boundType){
+                        //It's an unknown command broadcast
+                        Z21BroadcastLanXUnknownCommand z21BroadcastLanXUnknownCommand = (Z21BroadcastLanXUnknownCommand) broadcast;
+                        for (Z21BroadcastListener listener : broadcastListeners){
+                            for (BroadcastTypes type : listener.getListenerTypes()){
+                                if (type == BroadcastTypes.LAN_X_UNKNOWN_COMMAND)
+                                    listener.onBroadCast(BroadcastTypes.LAN_X_UNKNOWN_COMMAND, z21BroadcastLanXUnknownCommand);
                             }
                         }
                     }
@@ -130,7 +149,6 @@ public class Z21 implements Runnable{
                 Logger.getLogger("Z21 Receiver").warning("Failed to get a message from z21... " + e);
             }
         }
-        socket.close();
     }
 
     public void addResponseListener(Z21ResponseListener listener){
@@ -155,10 +173,11 @@ public class Z21 implements Runnable{
      * Used to gracefully stop all communications.
      */
     public void shutdown(){
+        Logger.getLogger("Z21").info("Shutting down all communication.");
         exit = true;
+        socket.close();
         listenerThread.interrupt();
         sendActionToZ21(new Z21ActionLanLogoff());
-        Logger.getLogger("Z21").info("Shutting down all communication.");
     }
 
     @Override
@@ -204,9 +223,10 @@ class PacketConverter {
         byte [] newArray = new byte[data[0]];
         System.arraycopy(data, 0, newArray, 0, newArray.length);
 
-        if (header1 == 0x40 && header2 == 0x00 && xHeader == 239){
+        if (header1 == 0x40 && header2 == 0x00 && xHeader == 239)
             return new Z21BroadcastLanXLocoInfo(newArray);
-        }
+        else if (header1 == 0x40 && header2 == 0x00 && xHeader == 0x61 && (data[5] & 255) == 0x82)
+            return new Z21BroadcastLanXUnknownCommand(newArray);
         return null;
     }
 
