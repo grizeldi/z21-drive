@@ -146,7 +146,8 @@ public class Z21 implements Runnable{
                     }
                 }
             }catch (IOException e){
-                Logger.getLogger("Z21 Receiver").warning("Failed to get a message from z21... " + e);
+                if (!exit)
+                    Logger.getLogger("Z21 Receiver").warning("Failed to get a message from z21... " + e);
             }
         }
     }
@@ -174,10 +175,9 @@ public class Z21 implements Runnable{
      */
     public void shutdown(){
         Logger.getLogger("Z21").info("Shutting down all communication.");
+        sendActionToZ21(new Z21ActionLanLogoff());
         exit = true;
         socket.close();
-        listenerThread.interrupt();
-        sendActionToZ21(new Z21ActionLanLogoff());
     }
 
     @Override
