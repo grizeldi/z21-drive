@@ -14,18 +14,18 @@ public class Z21ActionSetLocoDrive extends Z21Action{
      * @param direction Which direction the loco should go (true = forward, false = backward).
      * @throws LocoAddressOutOfRangeException Thrown when loco address is too big or negative.
      */
-    public Z21ActionSetLocoDrive(int locoAddress, byte speed, byte speedStepsID, boolean direction) throws LocoAddressOutOfRangeException{
+    public Z21ActionSetLocoDrive(int locoAddress, int speed, int speedStepsID, boolean direction) throws LocoAddressOutOfRangeException{
         byteRepresentation.add(Byte.decode("0x40"));
         byteRepresentation.add(Byte.decode("0x00"));
         if (locoAddress < 1 || locoAddress > 63)
             throw new LocoAddressOutOfRangeException(locoAddress);
-        addDataToByteRepresentation(new Object[]{locoAddress, speed, speedStepsID, direction});
+        addDataToByteRepresentation(new Object[]{locoAddress, (byte)speed, (byte)speedStepsID, direction});
         addLenByte();
     }
 
     @Override
     public void addDataToByteRepresentation(Object[] objs) {
-        byteRepresentation.add(Byte.decode("0xE4"));
+        byteRepresentation.add((byte)0xE4);
         switch ((Byte) objs[2]){
             case 0:
                 byteRepresentation.add((byte)16);
@@ -39,8 +39,17 @@ public class Z21ActionSetLocoDrive extends Z21Action{
             default:
                 System.err.println("Constructing new SetLocoDrive action: Unknown speed step ID");
         }
-        byte Adr_MSB = (Byte) objs[0];
-        byte Adr_LSB = (byte)24;
+        byte Adr_MSB;
+        byte Adr_LSB;
+        String binary = String.format("%16s", Integer.toBinaryString((Integer) objs[0])).replace(' ', '0');
+        String binaryMSB = binary.substring(0, 8);
+        String binaryLSB = binary.substring(8);
+
+        if (binary.replaceFirst ("^0*", "").toCharArray().length <= 8)
+            Adr_MSB = 0;
+        else
+            Adr_MSB = (byte) Integer.parseInt(binaryMSB, 2);
+        Adr_LSB = (byte) Integer.parseInt(binaryLSB, 2);
         byteRepresentation.add(Adr_MSB);
         byteRepresentation.add(Adr_LSB);
         
@@ -50,7 +59,7 @@ public class Z21ActionSetLocoDrive extends Z21Action{
                 (speedAndDirection[3]?1<<4:0) + (speedAndDirection[4]?1<<3:0) + (speedAndDirection[5]?1<<2:0) +
                 (speedAndDirection[6]?1<<1:0) + (speedAndDirection[7]?1:0)));
         byteRepresentation.add((byte) (byteRepresentation.get(2) ^ byteRepresentation.get(3)
-                ^ byteRepresentation.get(4) ^ byteRepresentation.get(5) ^ byteRepresentation.get(6) ^ byteRepresentation.get(7)));
+                ^ byteRepresentation.get(4) ^ byteRepresentation.get(5) ^ byteRepresentation.get(6)));
     }
 
     private boolean [] fromByte(byte x){
