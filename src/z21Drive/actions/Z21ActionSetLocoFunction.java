@@ -157,7 +157,6 @@ public class Z21ActionSetLocoFunction extends Z21Action{
                 (dataByte[3]?1<<4:0) + (dataByte[4]?1<<3:0) + (dataByte[5]?1<<2:0) +
                 (dataByte[6]?1<<1:0) + (dataByte[7]?1:0));
         byteRepresentation.add((byte)backToByte);
-        System.out.println("Data byte is: " + backToByte);
 
         //Add the XOR byte
         byte xor;
