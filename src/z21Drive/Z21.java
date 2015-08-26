@@ -32,14 +32,12 @@ public class Z21 implements Runnable{
     private boolean exit = false;
     private List<Z21ResponseListener> responseListeners = new ArrayList<Z21ResponseListener>();
     private List<Z21BroadcastListener> broadcastListeners = new ArrayList<Z21BroadcastListener>();
-    private Thread listenerThread;
     private DatagramSocket socket;
     private static final int keepAliveTimeout = 30000;
-    private Timer keepAliveTimer;
 
     private Z21() {
         Logger.getLogger("Z21 init").info("Z21 initializing");
-        listenerThread = new Thread(this);
+        Thread listenerThread = new Thread(this);
         try {
             socket = new DatagramSocket(port);
         }catch (SocketException e){
@@ -64,7 +62,7 @@ public class Z21 implements Runnable{
     }
 
     private void initKeepAliveTimer(){
-        keepAliveTimer = new Timer(keepAliveTimeout, new ActionListener() {
+        Timer keepAliveTimer = new Timer(keepAliveTimeout, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 sendActionToZ21(new Z21ActionGetSerialNumber());

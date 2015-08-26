@@ -8,6 +8,10 @@ import z21Drive.broadcasts.Z21Broadcast;
 import z21Drive.broadcasts.Z21BroadcastLanXLocoInfo;
 import z21Drive.broadcasts.Z21BroadcastListener;
 
+/**
+ * Sends request for info of loco #5 and then keeps printing any changes.
+ * @see z21Drive.Z21
+ */
 public class Main implements Runnable{
 
     public static void main(String[] args) {
