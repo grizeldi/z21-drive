@@ -141,6 +141,24 @@ public class Z21 implements Runnable{
                                     listener.onBroadCast(BroadcastTypes.LAN_X_UNKNOWN_COMMAND, z21BroadcastLanXUnknownCommand);
                             }
                         }
+                    }else if (broadcast.boundType == Z21ResponseAndBroadcastCollection.lanXTrackPowerOff.boundType){
+                        //It's a track power off broadcast
+                        Z21BroadcastLanXTrackPowerOff z21BroadcastLanXTrackPowerOff = (Z21BroadcastLanXTrackPowerOff) broadcast;
+                        for (Z21BroadcastListener listener: broadcastListeners){
+                            for (BroadcastTypes type : listener.getListenerTypes()){
+                                if (type == BroadcastTypes.LAN_X_TRACK_POWER_OFF)
+                                    listener.onBroadCast(BroadcastTypes.LAN_X_TRACK_POWER_OFF, z21BroadcastLanXTrackPowerOff);
+                            }
+                        }
+                    }else if (broadcast.boundType == Z21ResponseAndBroadcastCollection.lanXTrackPowerOn.boundType){
+                        //It's a track power on broadcast
+                        Z21BroadcastLanXTrackPowerOn z21BroadcastLanXTrackPowerOn = (Z21BroadcastLanXTrackPowerOn) broadcast;
+                        for (Z21BroadcastListener listener : broadcastListeners){
+                            for (BroadcastTypes type : listener.getListenerTypes()){
+                                if (type == BroadcastTypes.LAN_X_TRACK_POWER_ON)
+                                    listener.onBroadCast(BroadcastTypes.LAN_X_TRACK_POWER_ON, z21BroadcastLanXTrackPowerOn);
+                            }
+                        }
                     }
                 }
             }catch (IOException e){
@@ -225,6 +243,16 @@ class PacketConverter {
             return new Z21BroadcastLanXLocoInfo(newArray);
         else if (header1 == 0x40 && header2 == 0x00 && xHeader == 0x61 && (data[5] & 255) == 0x82)
             return new Z21BroadcastLanXUnknownCommand(newArray);
+        else if (header1 == 0x40 && header2 == 0x00 && xHeader == 0x61 && (data[5] & 255) == 0x00)
+            return new Z21BroadcastLanXTrackPowerOff(newArray);
+        else if (header1 == 0x40 && header2 == 0x00 && xHeader == 0x61 && (data[5] & 255) == 0x01)
+            return new Z21BroadcastLanXTrackPowerOn(newArray);
+        else {
+            Logger.getLogger("Z21 Receiver").warning("Received unknown message. Array:");
+            for (byte b : newArray)
+                System.out.print(b + " ");
+            System.out.print("\n");
+        }
         return null;
     }
 
