@@ -38,125 +38,13 @@ public class Z21ActionSetLocoFunction extends Z21Action{
         byteRepresentation.add(Adr_LSB);
 
         //Generate data byte
-        boolean [] dataByte = new boolean[8];
-        if ((Boolean) objs[2]){
-            dataByte[0] = true;
-            dataByte[1] = false;
-        }else {
-            dataByte[0] = false;
-            dataByte[1] = false;
-        }
-        switch ((Integer) objs [1]){
-            case 0:
-                dataByte[2] = false;
-                dataByte[3] = false;
-                dataByte[4] = false;
-                dataByte[5] = false;
-                dataByte[6] = false;
-                dataByte[7] = false;
-                break;
-            case 1:
-                dataByte[2] = false;
-                dataByte[3] = false;
-                dataByte[4] = false;
-                dataByte[5] = false;
-                dataByte[6] = false;
-                dataByte[7] = true;
-                break;
-            case 2:
-                dataByte[2] = false;
-                dataByte[3] = false;
-                dataByte[4] = false;
-                dataByte[5] = false;
-                dataByte[6] = true;
-                dataByte[7] = false;
-                break;
-            case 3:
-                dataByte[2] = false;
-                dataByte[3] = false;
-                dataByte[4] = false;
-                dataByte[5] = false;
-                dataByte[6] = true;
-                dataByte[7] = true;
-                break;
-            case 4:
-                dataByte[2] = false;
-                dataByte[3] = false;
-                dataByte[4] = false;
-                dataByte[5] = true;
-                dataByte[6] = false;
-                dataByte[7] = false;
-                break;
-            case 5:
-                dataByte[2] = false;
-                dataByte[3] = false;
-                dataByte[4] = false;
-                dataByte[5] = true;
-                dataByte[6] = false;
-                dataByte[7] = true;
-                break;
-            case 6:
-                dataByte[2] = false;
-                dataByte[3] = false;
-                dataByte[4] = false;
-                dataByte[5] = true;
-                dataByte[6] = true;
-                dataByte[7] = false;
-                break;
-            case 7:
-                dataByte[2] = false;
-                dataByte[3] = false;
-                dataByte[4] = false;
-                dataByte[5] = true;
-                dataByte[6] = true;
-                dataByte[7] = true;
-                break;
-            case 8:
-                dataByte[2] = false;
-                dataByte[3] = false;
-                dataByte[4] = true;
-                dataByte[5] = false;
-                dataByte[6] = false;
-                dataByte[7] = false;
-                break;
-            case 9:
-                dataByte[2] = false;
-                dataByte[3] = false;
-                dataByte[4] = true;
-                dataByte[5] = false;
-                dataByte[6] = false;
-                dataByte[7] = true;
-                break;
-            case 10:
-                dataByte[2] = false;
-                dataByte[3] = false;
-                dataByte[4] = true;
-                dataByte[5] = false;
-                dataByte[6] = true;
-                dataByte[7] = false;
-                break;
-            case 11:
-                dataByte[2] = false;
-                dataByte[3] = false;
-                dataByte[4] = true;
-                dataByte[5] = false;
-                dataByte[6] = true;
-                dataByte[7] = true;
-                break;
-            case 12:
-                dataByte[2] = false;
-                dataByte[3] = false;
-                dataByte[4] = true;
-                dataByte[5] = true;
-                dataByte[6] = false;
-                dataByte[7] = false;
-                break;
-        }
+        int dataByte;
+        if ((Boolean) objs[2])
+            dataByte = ((Integer) objs[1] & 63) | 128;
+        else
+            dataByte = (Integer) objs[1] & 63;
 
-        int backToByte = ((dataByte[0]?1<<7:0) + (dataByte[1]?1<<6:0) + (dataByte[2]?1<<5:0) +
-                (dataByte[3]?1<<4:0) + (dataByte[4]?1<<3:0) + (dataByte[5]?1<<2:0) +
-                (dataByte[6]?1<<1:0) + (dataByte[7]?1:0));
-        byteRepresentation.add((byte)backToByte);
+        byteRepresentation.add((byte)dataByte);
 
         //Add the XOR byte
         byte xor;
