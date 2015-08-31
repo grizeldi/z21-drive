@@ -1,9 +1,6 @@
 package z21Drive;
 
-import z21Drive.broadcasts.Z21BroadcastLanXLocoInfo;
-import z21Drive.broadcasts.Z21BroadcastLanXTrackPowerOff;
-import z21Drive.broadcasts.Z21BroadcastLanXTrackPowerOn;
-import z21Drive.broadcasts.Z21BroadcastLanXUnknownCommand;
+import z21Drive.broadcasts.*;
 import z21Drive.responses.Z21ResponseGetSerialNumber;
 
 import javax.naming.OperationNotSupportedException;

@@ -122,41 +122,43 @@ public class Z21 implements Runnable{
                     }
                 }else {
                     Z21Broadcast broadcast = PacketConverter.broadcastFromPacket(packet);
-                    //Narrow the class definition
-                    if (broadcast.boundType == Z21ResponseAndBroadcastCollection.lanXLocoInfo.boundType){
-                        //It's a loco info broadcast
-                        Z21BroadcastLanXLocoInfo z21BroadcastLanXLocoInfo = (Z21BroadcastLanXLocoInfo) broadcast;
-                        for (Z21BroadcastListener listener : broadcastListeners){
-                            for (BroadcastTypes type : listener.getListenerTypes()){
-                                if (type == BroadcastTypes.LAN_X_LOCO_INFO)
-                                    listener.onBroadCast(BroadcastTypes.LAN_X_LOCO_INFO, z21BroadcastLanXLocoInfo);
+                    if (!(broadcast == null)) {
+                        //Narrow the class definition
+                        if (broadcast.boundType == Z21ResponseAndBroadcastCollection.lanXLocoInfo.boundType) {
+                            //It's a loco info broadcast
+                            Z21BroadcastLanXLocoInfo z21BroadcastLanXLocoInfo = (Z21BroadcastLanXLocoInfo) broadcast;
+                            for (Z21BroadcastListener listener : broadcastListeners) {
+                                for (BroadcastTypes type : listener.getListenerTypes()) {
+                                    if (type == BroadcastTypes.LAN_X_LOCO_INFO)
+                                        listener.onBroadCast(BroadcastTypes.LAN_X_LOCO_INFO, z21BroadcastLanXLocoInfo);
+                                }
                             }
-                        }
-                    }else if (broadcast.boundType == Z21ResponseAndBroadcastCollection.lanXUnknownCommand.boundType){
-                        //It's an unknown command broadcast
-                        Z21BroadcastLanXUnknownCommand z21BroadcastLanXUnknownCommand = (Z21BroadcastLanXUnknownCommand) broadcast;
-                        for (Z21BroadcastListener listener : broadcastListeners){
-                            for (BroadcastTypes type : listener.getListenerTypes()){
-                                if (type == BroadcastTypes.LAN_X_UNKNOWN_COMMAND)
-                                    listener.onBroadCast(BroadcastTypes.LAN_X_UNKNOWN_COMMAND, z21BroadcastLanXUnknownCommand);
+                        } else if (broadcast.boundType == Z21ResponseAndBroadcastCollection.lanXUnknownCommand.boundType) {
+                            //It's an unknown command broadcast
+                            Z21BroadcastLanXUnknownCommand z21BroadcastLanXUnknownCommand = (Z21BroadcastLanXUnknownCommand) broadcast;
+                            for (Z21BroadcastListener listener : broadcastListeners) {
+                                for (BroadcastTypes type : listener.getListenerTypes()) {
+                                    if (type == BroadcastTypes.LAN_X_UNKNOWN_COMMAND)
+                                        listener.onBroadCast(BroadcastTypes.LAN_X_UNKNOWN_COMMAND, z21BroadcastLanXUnknownCommand);
+                                }
                             }
-                        }
-                    }else if (broadcast.boundType == Z21ResponseAndBroadcastCollection.lanXTrackPowerOff.boundType){
-                        //It's a track power off broadcast
-                        Z21BroadcastLanXTrackPowerOff z21BroadcastLanXTrackPowerOff = (Z21BroadcastLanXTrackPowerOff) broadcast;
-                        for (Z21BroadcastListener listener: broadcastListeners){
-                            for (BroadcastTypes type : listener.getListenerTypes()){
-                                if (type == BroadcastTypes.LAN_X_TRACK_POWER_OFF)
-                                    listener.onBroadCast(BroadcastTypes.LAN_X_TRACK_POWER_OFF, z21BroadcastLanXTrackPowerOff);
+                        } else if (broadcast.boundType == Z21ResponseAndBroadcastCollection.lanXTrackPowerOff.boundType) {
+                            //It's a track power off broadcast
+                            Z21BroadcastLanXTrackPowerOff z21BroadcastLanXTrackPowerOff = (Z21BroadcastLanXTrackPowerOff) broadcast;
+                            for (Z21BroadcastListener listener : broadcastListeners) {
+                                for (BroadcastTypes type : listener.getListenerTypes()) {
+                                    if (type == BroadcastTypes.LAN_X_TRACK_POWER_OFF)
+                                        listener.onBroadCast(BroadcastTypes.LAN_X_TRACK_POWER_OFF, z21BroadcastLanXTrackPowerOff);
+                                }
                             }
-                        }
-                    }else if (broadcast.boundType == Z21ResponseAndBroadcastCollection.lanXTrackPowerOn.boundType){
-                        //It's a track power on broadcast
-                        Z21BroadcastLanXTrackPowerOn z21BroadcastLanXTrackPowerOn = (Z21BroadcastLanXTrackPowerOn) broadcast;
-                        for (Z21BroadcastListener listener : broadcastListeners){
-                            for (BroadcastTypes type : listener.getListenerTypes()){
-                                if (type == BroadcastTypes.LAN_X_TRACK_POWER_ON)
-                                    listener.onBroadCast(BroadcastTypes.LAN_X_TRACK_POWER_ON, z21BroadcastLanXTrackPowerOn);
+                        } else if (broadcast.boundType == Z21ResponseAndBroadcastCollection.lanXTrackPowerOn.boundType) {
+                            //It's a track power on broadcast
+                            Z21BroadcastLanXTrackPowerOn z21BroadcastLanXTrackPowerOn = (Z21BroadcastLanXTrackPowerOn) broadcast;
+                            for (Z21BroadcastListener listener : broadcastListeners) {
+                                for (BroadcastTypes type : listener.getListenerTypes()) {
+                                    if (type == BroadcastTypes.LAN_X_TRACK_POWER_ON)
+                                        listener.onBroadCast(BroadcastTypes.LAN_X_TRACK_POWER_ON, z21BroadcastLanXTrackPowerOn);
+                                }
                             }
                         }
                     }
