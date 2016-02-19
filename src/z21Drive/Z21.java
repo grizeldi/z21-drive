@@ -236,10 +236,17 @@ class PacketConverter {
     //TODO add more broadcast types
     public static Z21Broadcast broadcastFromPacket(DatagramPacket packet){
         byte [] data = packet.getData();
+        //Get headers
         byte header1 = data[2], header2 = data[3];
         int xHeader = data[4] & 255;
+        //Discard all zeros
         byte [] newArray = new byte[data[0]];
         System.arraycopy(data, 0, newArray, 0, newArray.length);
+        if (data[data[0] + 1] != 0){
+            //We got two messages in one packet.
+            //Don't know yet what to do. TODO
+            Logger.getLogger("Z21 Receiver").info("Received two messages in one packet. Multiple messages not supported yet.");
+        }
 
         if (header1 == 0x40 && header2 == 0x00 && xHeader == 239)
             return new Z21BroadcastLanXLocoInfo(newArray);
@@ -253,7 +260,7 @@ class PacketConverter {
             Logger.getLogger("Z21 Receiver").warning("Received unknown message. Array:");
             for (byte b : newArray)
                 System.out.print(b + " ");
-            System.out.print("\n");
+            System.out.print("");
         }
         return null;
     }
