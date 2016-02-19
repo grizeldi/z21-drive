@@ -4,10 +4,7 @@ import z21Drive.actions.Z21Action;
 import z21Drive.actions.Z21ActionGetSerialNumber;
 import z21Drive.actions.Z21ActionLanLogoff;
 import z21Drive.broadcasts.*;
-import z21Drive.responses.ResponseTypes;
-import z21Drive.responses.Z21Response;
-import z21Drive.responses.Z21ResponseGetSerialNumber;
-import z21Drive.responses.Z21ResponseListener;
+import z21Drive.responses.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -122,8 +119,18 @@ public class Z21 implements Runnable{
                         //Deliver it
                         for (Z21ResponseListener listener : responseListeners){
                             for (ResponseTypes type : listener.getListenerTypes()){
-                                if (type == ResponseTypes.LAN_X_GET_VERSION_RESPONSE)
-                                    listener.responseReceived(ResponseTypes.LAN_X_GET_VERSION_RESPONSE, z21ResponseGetSerialNumber);
+                                if (type == ResponseTypes.LAN_GET_SERIAL_NUMBER_RESPONSE)
+                                    listener.responseReceived(ResponseTypes.LAN_GET_SERIAL_NUMBER_RESPONSE, z21ResponseGetSerialNumber);
+                            }
+                        }
+                    }else if (response.boundType == Z21ResponseAndBroadcastCollection.lanXGetFirmwareVersion.boundType){
+                        //It's firmware
+                        Z21ResponseLanXGetFirmwareVersion z21ResponseLanXGetFirmwareVersion = (Z21ResponseLanXGetFirmwareVersion) response;
+                        //Deliver it
+                        for (Z21ResponseListener listener : responseListeners){
+                            for (ResponseTypes type : listener.getListenerTypes()){
+                                if (type == ResponseTypes.LAN_X_GET_FIRMWARE_VERSION)
+                                    listener.responseReceived(ResponseTypes.LAN_X_GET_FIRMWARE_VERSION, z21ResponseLanXGetFirmwareVersion);
                             }
                         }
                     }
@@ -232,6 +239,8 @@ class PacketConverter {
         byte header1 = array[2], header2 = array[3];
         if (header1 == 0x10 && header2 == 0x00)
             return new Z21ResponseGetSerialNumber(array);
+        else if (header1 == 0x40 && header2 == 0x00)
+            return  new Z21ResponseLanXGetFirmwareVersion(array);
         return null;
     }
 

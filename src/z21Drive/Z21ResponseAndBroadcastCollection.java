@@ -2,6 +2,7 @@ package z21Drive;
 
 import z21Drive.broadcasts.*;
 import z21Drive.responses.Z21ResponseGetSerialNumber;
+import z21Drive.responses.Z21ResponseLanXGetFirmwareVersion;
 
 import javax.naming.OperationNotSupportedException;
 
@@ -16,6 +17,7 @@ class Z21ResponseAndBroadcastCollection {
     public static final Z21BroadcastLanXTrackPowerOn lanXTrackPowerOn = new Z21BroadcastLanXTrackPowerOn(null);
 
     public static final Z21ResponseGetSerialNumber getSerialNumber = new Z21ResponseGetSerialNumber(null);
+    public static final Z21ResponseLanXGetFirmwareVersion lanXGetFirmwareVersion = new Z21ResponseLanXGetFirmwareVersion(null);
 
     public Z21ResponseAndBroadcastCollection() throws OperationNotSupportedException{
         throw new OperationNotSupportedException("No objects of this type allowed.");
