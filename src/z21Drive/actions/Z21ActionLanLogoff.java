@@ -1,14 +1,16 @@
 package z21Drive.actions;
 
+import java.util.Arrays;
+
 /**
  * Used to log off from z21 when shutting down the app.
  */
 public class Z21ActionLanLogoff extends Z21Action{
+    //Made a static one here for better performance.
+    private static Byte[] rep = new Byte[]{0x04, 0x00, 0x30, 0x00};
 
     public Z21ActionLanLogoff(){
-        byteRepresentation.add(Byte.decode("0x30"));
-        byteRepresentation.add(Byte.decode("0x00"));
-        addLenByte();
+        byteRepresentation = Arrays.asList(rep);
     }
 
     /**

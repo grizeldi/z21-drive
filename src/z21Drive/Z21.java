@@ -59,6 +59,13 @@ public class Z21 implements Runnable{
             }
         });
         initKeepAliveTimer();
+        //Make sure z21 shuts down communication gracefully
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            @Override
+            public void run() {
+                shutdown();
+            }
+        }));
     }
 
     private void initKeepAliveTimer(){
