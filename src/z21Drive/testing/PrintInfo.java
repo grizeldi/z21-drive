@@ -12,11 +12,11 @@ import z21Drive.broadcasts.Z21BroadcastListener;
  * Sends request for info of loco #5 and then keeps printing any changes.
  * @see z21Drive.Z21
  */
-public class Main implements Runnable{
+public class PrintInfo implements Runnable{
 
     public static void main(String[] args) {
         //Start things up
-        new Thread(new Main()).start();
+        new Thread(new PrintInfo()).start();
     }
 
     public void run(){
