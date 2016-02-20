@@ -9,6 +9,7 @@ public enum BroadcastFlags {
     /**
      * If true z21 will send information for all changed locos to this library.
      * Overflows network with UDP packets very easily, so enable only when needed.
+     * @see java.net.DatagramPacket
      */
     RECEIVE_ALL_LOCOS,
     /**
