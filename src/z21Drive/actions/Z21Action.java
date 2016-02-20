@@ -17,7 +17,7 @@ public abstract class Z21Action {
      * Here actual conversion to bytes happens
      * @param objs Whatever objects you might need to determine the bytes.
      */
-    public abstract void addDataToByteRepresentation(Object [] objs);
+    protected abstract void addDataToByteRepresentation(Object[] objs);
 
     /**
      * Adds the required length of message bytes.

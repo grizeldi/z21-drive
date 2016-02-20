@@ -17,7 +17,7 @@ public class Z21ActionSetLocoDrive extends Z21Action{
     public Z21ActionSetLocoDrive(int locoAddress, int speed, int speedStepsID, boolean direction) throws LocoAddressOutOfRangeException{
         byteRepresentation.add(Byte.decode("0x40"));
         byteRepresentation.add(Byte.decode("0x00"));
-        if (locoAddress < 1 || locoAddress > 63)
+        if (locoAddress < 1)
             throw new LocoAddressOutOfRangeException(locoAddress);
         addDataToByteRepresentation(new Object[]{locoAddress, (byte)speed, (byte)speedStepsID, direction});
         addLenByte();
@@ -50,6 +50,10 @@ public class Z21ActionSetLocoDrive extends Z21Action{
         else
             Adr_MSB = (byte) Integer.parseInt(binaryMSB, 2);
         Adr_LSB = (byte) Integer.parseInt(binaryLSB, 2);
+        //Modify highest bits for bigger loco address support
+        if ((Integer) objs[0] > 127){
+            Adr_MSB |= 0b11000000;
+        }
         byteRepresentation.add(Adr_MSB);
         byteRepresentation.add(Adr_LSB);
         
