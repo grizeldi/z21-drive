@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 /**
- * Main class in this library which represents Z21.
+ * Main class in this library which represents Z21 and handles all communication with it.
  * @author grizeldi
  */
 public class Z21 implements Runnable{
