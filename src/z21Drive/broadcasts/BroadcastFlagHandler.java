@@ -3,12 +3,15 @@ package z21Drive.broadcasts;
 import z21Drive.Z21;
 import z21Drive.actions.Z21Action;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+
 /**
  * Used to register for specific broadcasts.
  * @author grizeldi
  */
 public class BroadcastFlagHandler {
-    public static boolean receiveGlobalBroadcasts, receiveAllLocos, receiveCentreStatus;
+    private static boolean receiveGlobalBroadcasts = true, receiveAllLocos, receiveCentreStatus;
 
     public static void setReceive(BroadcastFlags flag, boolean receive){
         switch (flag){
@@ -25,6 +28,18 @@ public class BroadcastFlagHandler {
         //Send updated data to z21
         Z21 z21 = Z21.instance;
         z21.sendActionToZ21(new Z21ActionLanSetBroadcastFlags(receiveGlobalBroadcasts, receiveAllLocos, receiveCentreStatus));
+    }
+
+    public static boolean isReceiveGlobalBroadcasts() {
+        return receiveGlobalBroadcasts;
+    }
+
+    public static boolean isReceiveAllLocos() {
+        return receiveAllLocos;
+    }
+
+    public static boolean isReceiveCentreStatus() {
+        return receiveCentreStatus;
     }
 }
 
@@ -48,6 +63,13 @@ class Z21ActionLanSetBroadcastFlags extends Z21Action{
         if ((Boolean) objs[2]){
             data |= 0x00000100;
         }
-        //TODO turn that int into little endian byte array
+        //Change order to little endian
+        ByteBuffer buff = ByteBuffer.allocate(4);
+        buff.order(ByteOrder.LITTLE_ENDIAN);
+        buff.putInt(data);
+        buff.flip();
+        for (byte i = 0; i < 4; i++){
+            byteRepresentation.add(buff.get());
+        }
     }
 }
