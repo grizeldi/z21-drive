@@ -34,6 +34,10 @@ public class Z21ActionSetLocoFunction extends Z21Action{
         else
             Adr_MSB = (byte) Integer.parseInt(binaryMSB, 2);
         Adr_LSB = (byte) Integer.parseInt(binaryLSB, 2);
+        //Change big address bits
+        if ((Integer) objs[0] > 127){
+            Adr_MSB |= 0b11000000;
+        }
         byteRepresentation.add(Adr_MSB);
         byteRepresentation.add(Adr_LSB);
 
