@@ -110,8 +110,6 @@ public class Z21 implements Runnable{
                 DatagramPacket packet = new DatagramPacket(new byte [510], 510);
                 socket.receive(packet);
                 //Determine if it's a response or a broadcast
-                System.out.println("As response: " + PacketConverter.responseFromPacket(packet));
-                System.out.println("As broadcast: " + PacketConverter.broadcastFromPacket(packet));
                 if (PacketConverter.responseFromPacket(packet) != null){
                     Z21Response response = PacketConverter.responseFromPacket(packet);
                     //Narrow the class definition
