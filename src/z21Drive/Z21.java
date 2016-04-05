@@ -110,6 +110,8 @@ public class Z21 implements Runnable{
                 DatagramPacket packet = new DatagramPacket(new byte [510], 510);
                 socket.receive(packet);
                 //Determine if it's a response or a broadcast
+                System.out.println("As response: " + PacketConverter.responseFromPacket(packet));
+                System.out.println("As broadcast: " + PacketConverter.broadcastFromPacket(packet));
                 if (PacketConverter.responseFromPacket(packet) != null){
                     Z21Response response = PacketConverter.responseFromPacket(packet);
                     //Narrow the class definition
@@ -136,7 +138,7 @@ public class Z21 implements Runnable{
                     }
                 }else {
                     Z21Broadcast broadcast = PacketConverter.broadcastFromPacket(packet);
-                    if (!(broadcast == null)) {
+                    if (broadcast != null) {
                         //Narrow the class definition
                         if (broadcast.boundType == Z21ResponseAndBroadcastCollection.lanXLocoInfo.boundType) {
                             //It's a loco info broadcast
@@ -223,7 +225,7 @@ public class Z21 implements Runnable{
  * Converting packets to objects and back.
  */
 class PacketConverter {
-    public static DatagramPacket convert(Z21Action action){
+    static DatagramPacket convert(Z21Action action){
         byte [] packetContent = toPrimitive(action.getByteRepresentation().toArray(new Byte [0]));
         return new DatagramPacket(packetContent, action.getByteRepresentation().size());
     }
@@ -233,13 +235,13 @@ class PacketConverter {
      * @param packet UDP packet received from Z21
      * @return Z21 response object which represents the byte array.
      */
-    //TODO add more response types
-    public static Z21Response responseFromPacket(DatagramPacket packet){
+    static Z21Response responseFromPacket(DatagramPacket packet){
         byte [] array = packet.getData();
         byte header1 = array[2], header2 = array[3];
+        int xHeader = array[4] & 255;
         if (header1 == 0x10 && header2 == 0x00)
             return new Z21ResponseGetSerialNumber(array);
-        else if (header1 == 0x40 && header2 == 0x00)
+        else if (header1 == 0x40 && header2 == 0x00 && xHeader == 0xF1)
             return  new Z21ResponseLanXGetFirmwareVersion(array);
         return null;
     }
@@ -249,8 +251,7 @@ class PacketConverter {
      * @param packet UDP packet received from Z21
      * @return Z21 broadcast object which represents the broadcast sent from Z21.
      */
-    //TODO add more broadcast types
-    public static Z21Broadcast broadcastFromPacket(DatagramPacket packet){
+    static Z21Broadcast broadcastFromPacket(DatagramPacket packet){
         byte [] data = packet.getData();
         //Get headers
         byte header1 = data[2], header2 = data[3];
