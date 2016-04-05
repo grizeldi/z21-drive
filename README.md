@@ -1,9 +1,9 @@
 # z21-drive
-Java library for driving model trains with Fleischmann/Roco z21 DCC centre. 
-Meant as a lightweight, but less functional alternative to JMRI, because there will be only driving functionallity. One can easily implement other stuff if he wants. Supports loco addresses up to 127.
+A low level Java API for driving model trains with Fleischmann/Roco z21 DCC centre. 
+Meant for custom train controllers (cabs, control sticks...) and layout automation. Supports loco addresses up to 127.
 
-In the current state it doesn't support some minor part of z21 network protocol. If you get information on unsupported features create a new issue.
+In the current state it doesn't support some minor part of z21 network protocol. If you get information on unsupported features as output, create a new issue and I'll try to fix it. However in my testing I never got any errors like that so it should be ok.
 
-Made for a real life control cab, but can also be used for automation if you implement LocoNet stuff.
+For automation it currently lacks of LocoNet classes. If you feel like writing it, sure do it. I would be very glad if someone makes a PR for it.
 
 Feel free to fork and make pull requests.
