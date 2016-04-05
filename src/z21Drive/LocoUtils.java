@@ -2,6 +2,7 @@ package z21Drive;
 
 import z21Drive.actions.Z21ActionGetLocoInfo;
 import z21Drive.actions.Z21ActionSetLocoDrive;
+import z21Drive.actions.Z21ActionSetLocoFunction;
 import z21Drive.broadcasts.BroadcastTypes;
 import z21Drive.broadcasts.Z21Broadcast;
 import z21Drive.broadcasts.Z21BroadcastLanXLocoInfo;
@@ -45,11 +46,18 @@ public class LocoUtils {
         } catch (LocoAddressOutOfRangeException e) {
             System.err.println("Idiot detected.");
             e.printStackTrace();
-            return;
         }
     }
 
     public static void activateFunction(int locoAddress, int function){
-
+        try {
+            Z21ActionSetLocoFunction action = new Z21ActionSetLocoFunction(locoAddress, function, true);
+            z21.sendActionToZ21(action);
+            Thread.sleep(500);
+            action = new Z21ActionSetLocoFunction(locoAddress, function, false);
+            z21.sendActionToZ21(action);
+        } catch (LocoAddressOutOfRangeException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
