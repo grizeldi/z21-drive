@@ -6,6 +6,10 @@ public class Z21Constants {
      * Maps internal ids of speed steps to actual speed steps.
      */
     public static final int SPEED_STEPS_14 = 0, SPEED_STEPS_28 = 2, SPEED_STEPS_128 = 3;
+    /**
+     * Used for loco direction.
+     */
+    public static final boolean FORWARD = true, BACKWARD = false;
 
     /**
      * Used to turn actual amount of speed steps to z21-drive's internal ID.
