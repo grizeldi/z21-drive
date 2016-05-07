@@ -24,7 +24,7 @@ public class Z21ActionSetLocoDrive extends Z21Action{
     }
 
     @Override
-    public void addDataToByteRepresentation(Object[] objs) {
+    public void addDataToByteRepresentation(Object[] objs){
         byteRepresentation.add((byte)0xE4);
         switch ((Byte) objs[2]){
             case 0:
@@ -38,6 +38,7 @@ public class Z21ActionSetLocoDrive extends Z21Action{
                 break;
             default:
                 System.err.println("Constructing new SetLocoDrive action: Unknown speed step ID");
+                throw new RuntimeException("Wrong speed step ID");
         }
         byte Adr_MSB;
         byte Adr_LSB;
@@ -57,15 +58,21 @@ public class Z21ActionSetLocoDrive extends Z21Action{
         byteRepresentation.add(Adr_MSB);
         byteRepresentation.add(Adr_LSB);
         
-        boolean [] speedAndDirection = fromByte((Byte) objs[1]);
+        /*boolean [] speedAndDirection = fromByte((Byte) objs[1]);
         speedAndDirection[0] = (Boolean) objs[3];
         byteRepresentation.add((byte)((speedAndDirection[0]?1<<7:0) + (speedAndDirection[1]?1<<6:0) + (speedAndDirection[2]?1<<5:0) +
                 (speedAndDirection[3]?1<<4:0) + (speedAndDirection[4]?1<<3:0) + (speedAndDirection[5]?1<<2:0) +
-                (speedAndDirection[6]?1<<1:0) + (speedAndDirection[7]?1:0)));
+                (speedAndDirection[6]?1<<1:0) + (speedAndDirection[7]?1:0)));*/
+        int speedAndDirection = (Byte) objs[1];
+        if ((Boolean)objs[3]){
+            speedAndDirection |= 0b10000000;
+        }
+        byteRepresentation.add((byte) speedAndDirection);
         byteRepresentation.add((byte) (byteRepresentation.get(2) ^ byteRepresentation.get(3)
                 ^ byteRepresentation.get(4) ^ byteRepresentation.get(5) ^ byteRepresentation.get(6)));
     }
 
+    @SuppressWarnings("Duplicates")
     private boolean [] fromByte(byte x){
         boolean bs[] = new boolean[8];
         bs[0] = ((x & 0x01) != 0);
