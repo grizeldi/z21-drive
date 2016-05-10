@@ -83,7 +83,7 @@ public class Z21 implements Runnable{
      * @param action Action to send.
      * @return returns true if action is sent successfully and false if it fails
      */
-    public boolean sendActionToZ21(Z21Action action){
+    public synchronized boolean sendActionToZ21(Z21Action action){
         DatagramPacket packet = PacketConverter.convert(action);
         try {
             InetAddress address = InetAddress.getByName(host);
