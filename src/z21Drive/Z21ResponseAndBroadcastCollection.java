@@ -15,6 +15,8 @@ class Z21ResponseAndBroadcastCollection {
     public static final Z21BroadcastLanXUnknownCommand lanXUnknownCommand = new Z21BroadcastLanXUnknownCommand(null);
     public static final Z21BroadcastLanXTrackPowerOff lanXTrackPowerOff = new Z21BroadcastLanXTrackPowerOff(null);
     public static final Z21BroadcastLanXTrackPowerOn lanXTrackPowerOn = new Z21BroadcastLanXTrackPowerOn(null);
+    public static final Z21BroadcastLanXCVResult lanXCvRead = new Z21BroadcastLanXCVResult(null);
+    public static final Z21BroadcastLanXCVNACK lanXCvNACK = new Z21BroadcastLanXCVNACK(null);
 
     public static final Z21ResponseGetSerialNumber getSerialNumber = new Z21ResponseGetSerialNumber(null);
     public static final Z21ResponseLanXGetFirmwareVersion lanXGetFirmwareVersion = new Z21ResponseLanXGetFirmwareVersion(null);
