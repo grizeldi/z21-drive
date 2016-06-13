@@ -1,6 +1,8 @@
 package z21Drive;
 
 import z21Drive.broadcasts.*;
+import z21Drive.responses.Z21ResponseLanXCVNACK;
+import z21Drive.responses.Z21ResponseLanXCVResult;
 import z21Drive.responses.Z21ResponseGetSerialNumber;
 import z21Drive.responses.Z21ResponseLanXGetFirmwareVersion;
 
@@ -15,8 +17,8 @@ class Z21ResponseAndBroadcastCollection {
     public static final Z21BroadcastLanXUnknownCommand lanXUnknownCommand = new Z21BroadcastLanXUnknownCommand(null);
     public static final Z21BroadcastLanXTrackPowerOff lanXTrackPowerOff = new Z21BroadcastLanXTrackPowerOff(null);
     public static final Z21BroadcastLanXTrackPowerOn lanXTrackPowerOn = new Z21BroadcastLanXTrackPowerOn(null);
-    public static final Z21BroadcastLanXCVResult lanXCvRead = new Z21BroadcastLanXCVResult(null);
-    public static final Z21BroadcastLanXCVNACK lanXCvNACK = new Z21BroadcastLanXCVNACK(null);
+    public static final Z21ResponseLanXCVResult lanXCvRead = new Z21ResponseLanXCVResult(null);
+    public static final Z21ResponseLanXCVNACK lanXCvNACK = new Z21ResponseLanXCVNACK(null);
 
     public static final Z21ResponseGetSerialNumber getSerialNumber = new Z21ResponseGetSerialNumber(null);
     public static final Z21ResponseLanXGetFirmwareVersion lanXGetFirmwareVersion = new Z21ResponseLanXGetFirmwareVersion(null);

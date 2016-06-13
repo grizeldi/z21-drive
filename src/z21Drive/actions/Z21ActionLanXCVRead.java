@@ -3,8 +3,7 @@ package z21Drive.actions;
 import z21Drive.LocoAddressOutOfRangeException;
 
 /**
- * Used to retrieve loco status from z21.
- * Supports loco addresses up to 128.
+ * Request a CV Value
  */
 public class Z21ActionLanXCVRead extends Z21Action{
 

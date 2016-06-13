@@ -123,7 +123,7 @@ public class Z21 implements Runnable{
                                     listener.responseReceived(ResponseTypes.LAN_GET_SERIAL_NUMBER_RESPONSE, z21ResponseGetSerialNumber);
                             }
                         }
-                    }else if (response.boundType == Z21ResponseAndBroadcastCollection.lanXGetFirmwareVersion.boundType){
+                    } else if (response.boundType == Z21ResponseAndBroadcastCollection.lanXGetFirmwareVersion.boundType){
                         //It's firmware
                         Z21ResponseLanXGetFirmwareVersion z21ResponseLanXGetFirmwareVersion = (Z21ResponseLanXGetFirmwareVersion) response;
                         //Deliver it
@@ -131,6 +131,26 @@ public class Z21 implements Runnable{
                             for (ResponseTypes type : listener.getListenerTypes()){
                                 if (type == ResponseTypes.LAN_X_GET_FIRMWARE_VERSION)
                                     listener.responseReceived(ResponseTypes.LAN_X_GET_FIRMWARE_VERSION, z21ResponseLanXGetFirmwareVersion);
+                            }
+                        }
+                    } else if (response.boundType == Z21ResponseAndBroadcastCollection.lanXCvRead.boundType) {
+                        //It's a CV Result
+                    	Z21ResponseLanXCVResult z21BroadcastLanXCVRead = (Z21ResponseLanXCVResult) response;
+
+                        for (Z21ResponseListener listener : responseListeners){
+                            for (ResponseTypes type : listener.getListenerTypes()){
+                                if (type == ResponseTypes.LAN_X_CV_RESULT)
+                                    listener.responseReceived(ResponseTypes.LAN_X_CV_RESULT, z21BroadcastLanXCVRead);
+                            }
+                        }
+                    } else if (response.boundType == Z21ResponseAndBroadcastCollection.lanXCvNACK.boundType) {
+                        //It's a CV Result
+                        Z21ResponseLanXCVNACK z21BroadcastLanXCVNACK = (Z21ResponseLanXCVNACK) response;
+
+                        for (Z21ResponseListener listener : responseListeners){
+                            for (ResponseTypes type : listener.getListenerTypes()){
+                                if (type == ResponseTypes.LAN_X_CV_NACK)
+                                    listener.responseReceived(ResponseTypes.LAN_X_CV_NACK, z21BroadcastLanXCVNACK);
                             }
                         }
                     }
@@ -174,24 +194,6 @@ public class Z21 implements Runnable{
                                         listener.onBroadCast(BroadcastTypes.LAN_X_TRACK_POWER_ON, z21BroadcastLanXTrackPowerOn);
                                 }
                             }
-                        } else if (broadcast.boundType == Z21ResponseAndBroadcastCollection.lanXCvRead.boundType) {
-                        	//It's a CV Result
-                        	Z21BroadcastLanXCVResult z21BroadcastLanXCVRead = (Z21BroadcastLanXCVResult) broadcast;
-                        	for (Z21BroadcastListener listener : broadcastListeners) {
-                        		for (BroadcastTypes type : listener.getListenerTypes()) {
-                        			if (type == BroadcastTypes.LAN_X_CV_RESULT)
-                        				listener.onBroadCast(BroadcastTypes.LAN_X_CV_RESULT, z21BroadcastLanXCVRead);
-                        		}
-                        	}
-                        } else if (broadcast.boundType == Z21ResponseAndBroadcastCollection.lanXCvNACK.boundType) {
-                        	//It's a CV Result
-                        	Z21BroadcastLanXCVNACK z21BroadcastLanXCVNACK = (Z21BroadcastLanXCVNACK) broadcast;
-                        	for (Z21BroadcastListener listener : broadcastListeners) {
-                        		for (BroadcastTypes type : listener.getListenerTypes()) {
-                        			if (type == BroadcastTypes.LAN_X_CV_NACK)
-                        				listener.onBroadCast(BroadcastTypes.LAN_X_CV_NACK, z21BroadcastLanXCVNACK);
-                        		}
-                        	}
                     }
                     }
                 }
@@ -259,6 +261,17 @@ class PacketConverter {
             return new Z21ResponseGetSerialNumber(array);
         else if (header1 == 0x40 && header2 == 0x00 && xHeader == 0xF1)
             return  new Z21ResponseLanXGetFirmwareVersion(array);
+        else if (header1 == 0x40 && header2 == 0x00 && xHeader == 0x64 && (array[5] & 255) == 0x14)
+            return new Z21ResponseLanXCVResult(array);
+        else if (header1 == 0x40 && header2 == 0x00 && xHeader == 0x61 && (array[5] & 255) == 0x13)
+            return new Z21ResponseLanXCVNACK(array);
+        else {
+            Logger.getLogger("Z21 Receiver").warning("Received unknown response message. Array:");
+            for (byte b : array)
+                System.out.print("0x" + String.format("%02X ", b));
+            System.out.println();
+            System.out.println("     " + "     " + "H1   " + "H2   " + "xH   ");
+        }
         return null;
     }
 
@@ -289,12 +302,8 @@ class PacketConverter {
             return new Z21BroadcastLanXTrackPowerOff(newArray);
         else if (header1 == 0x40 && header2 == 0x00 && xHeader == 0x61 && (data[5] & 255) == 0x01)
             return new Z21BroadcastLanXTrackPowerOn(newArray);
-        else if (header1 == 0x40 && header2 == 0x00 && xHeader == 0x64 && (data[5] & 255) == 0x14)
-            return new Z21BroadcastLanXCVResult(newArray);
-        else if (header1 == 0x40 && header2 == 0x00 && xHeader == 0x61 && (data[5] & 255) == 0x13)
-            return new Z21BroadcastLanXCVNACK(newArray);
         else {
-            Logger.getLogger("Z21 Receiver").warning("Received unknown message. Array:");
+            Logger.getLogger("Z21 Receiver").warning("Received unknown broadcast message. Array:");
             for (byte b : newArray)
                 System.out.print("0x" + String.format("%02X ", b));
             System.out.println();

@@ -1,16 +1,16 @@
-package z21Drive.broadcasts;
+package z21Drive.responses;
 
 /**
- * Probably the most important broadcast, because it represents the current state of a loco.
+ * Result for the Actoin_Lan_X_CV_Read
  */
-public class Z21BroadcastLanXCVResult extends Z21Broadcast{
+public class Z21ResponseLanXCVResult extends Z21Response{
 	private int cvadr;
 	private int value;
     
 
-    public Z21BroadcastLanXCVResult(byte[] initArray) {
+    public Z21ResponseLanXCVResult(byte[] initArray) {
         super(initArray);
-        boundType = BroadcastTypes.LAN_X_CV_RESULT;
+        boundType = ResponseTypes.LAN_X_CV_RESULT;
         if (byteRepresentation != null)
             populateFields();
     }

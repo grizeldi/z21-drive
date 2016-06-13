@@ -9,8 +9,11 @@ import z21Drive.actions.Z21ActionLanXCVRead;
 import z21Drive.actions.Z21ActionLanXTrackPowerOn;
 import z21Drive.broadcasts.BroadcastTypes;
 import z21Drive.broadcasts.Z21Broadcast;
-import z21Drive.broadcasts.Z21BroadcastLanXCVResult;
 import z21Drive.broadcasts.Z21BroadcastListener;
+import z21Drive.responses.ResponseTypes;
+import z21Drive.responses.Z21ResponseLanXCVResult;
+import z21Drive.responses.Z21Response;
+import z21Drive.responses.Z21ResponseListener;
 
 /**
  * Reads the CV Number of the Loco 
@@ -26,25 +29,25 @@ public class TestCV implements Runnable{
 
     public void run(){
         final Z21 z21 = Z21.instance;
-        z21.addBroadcastListener(new Z21BroadcastListener() {
+        z21.addResponseListener(new Z21ResponseListener() {
             @Override
-            public void onBroadCast(BroadcastTypes type, Z21Broadcast broadcast) {
-                if (type == BroadcastTypes.LAN_X_CV_RESULT){
-                	Z21BroadcastLanXCVResult bc = (Z21BroadcastLanXCVResult) broadcast;
+            public void responseReceived(ResponseTypes type, Z21Response response) {
+                if (type == ResponseTypes.LAN_X_CV_RESULT){
+                	Z21ResponseLanXCVResult bc = (Z21ResponseLanXCVResult) response;
                     String o = Integer.toBinaryString(bc.getValue());
                     while (o.length() < 8) {
                     	o = "0" + o;
                     }
                     System.out.println(String.format("%3d: %3d %s", bc.getCvadr(), bc.getValue(), o));
                     sendNext(z21);
-                } else if (type == BroadcastTypes.LAN_X_CV_NACK){
+                } else if (type == ResponseTypes.LAN_X_CV_NACK){
                 	System.out.println("NACK");
                 }
             }
 
             @Override
-            public BroadcastTypes[] getListenerTypes() {
-                return new BroadcastTypes[]{BroadcastTypes.LAN_X_CV_RESULT, BroadcastTypes.LAN_X_CV_NACK};
+            public ResponseTypes [] getListenerTypes() {
+                return new ResponseTypes[]{ResponseTypes.LAN_X_CV_RESULT, ResponseTypes.LAN_X_CV_NACK};
             }
         });
         sendNext(z21);
