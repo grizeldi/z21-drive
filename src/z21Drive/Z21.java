@@ -263,13 +263,6 @@ class PacketConverter {
             return new Z21ResponseLanXCVResult(array);
         else if (header1 == 0x40 && header2 == 0x00 && xHeader == 0x61 && (array[5] & 255) == 0x13)
             return new Z21ResponseLanXCVNACK(array);
-        else {
-            Logger.getLogger("Z21 Receiver").warning("Received unknown response message. Array:");
-            for (byte b : array)
-                System.out.print("0x" + String.format("%02X ", b));
-            System.out.println();
-            System.out.println("     " + "     " + "H1   " + "H2   " + "xH   ");
-        }
         return null;
     }
 
@@ -301,7 +294,7 @@ class PacketConverter {
         else if (header1 == 0x40 && header2 == 0x00 && xHeader == 0x61 && (data[5] & 255) == 0x01)
             return new Z21BroadcastLanXTrackPowerOn(newArray);
         else {
-            Logger.getLogger("Z21 Receiver").warning("Received unknown broadcast message. Array:");
+            Logger.getLogger("Z21 Receiver").warning("Received unknown message. Array:");
             for (byte b : newArray)
                 System.out.print("0x" + String.format("%02X ", b));
             System.out.println();
