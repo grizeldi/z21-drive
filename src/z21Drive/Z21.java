@@ -192,7 +192,7 @@ public class Z21 implements Runnable{
                                         listener.onBroadCast(BroadcastTypes.LAN_X_TRACK_POWER_ON, z21BroadcastLanXTrackPowerOn);
                                 }
                             }
-                    }
+                        }
                     }
                 }
             }catch (IOException e){
