@@ -192,6 +192,15 @@ public class Z21 implements Runnable{
                                         listener.onBroadCast(BroadcastTypes.LAN_X_TRACK_POWER_ON, z21BroadcastLanXTrackPowerOn);
                                 }
                             }
+                        } else if (broadcast.boundType == Z21ResponseAndBroadcastCollection.lanXProgrammingMode.boundType){
+                            //It's a programming mode broadcast
+                            Z21BroadcastLanXProgrammingMode z21BroadcastLanXProgrammingMode = (Z21BroadcastLanXProgrammingMode) broadcast;
+                            for (Z21BroadcastListener listener : broadcastListeners) {
+                                for (BroadcastTypes type : listener.getListenerTypes()) {
+                                    if (type == BroadcastTypes.LAN_X_PROGRAMMING_MODE)
+                                        listener.onBroadCast(BroadcastTypes.LAN_X_PROGRAMMING_MODE, z21BroadcastLanXProgrammingMode);
+                                }
+                            }
                         }
                     }
                 }
@@ -293,6 +302,8 @@ class PacketConverter {
             return new Z21BroadcastLanXTrackPowerOff(newArray);
         else if (header1 == 0x40 && header2 == 0x00 && xHeader == 0x61 && (data[5] & 255) == 0x01)
             return new Z21BroadcastLanXTrackPowerOn(newArray);
+        else if (header1 == 0x40 && header2 == 0x00 && xHeader == 0x61 && (data[5] & 255) == 0x02)
+            return new Z21BroadcastLanXProgrammingMode(newArray);
         else {
             Logger.getLogger("Z21 Receiver").warning("Received unknown message. Array:");
             for (byte b : newArray)
