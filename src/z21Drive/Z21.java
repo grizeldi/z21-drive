@@ -136,7 +136,6 @@ public class Z21 implements Runnable{
                     } else if (response.boundType == Z21ResponseAndBroadcastCollection.lanXCvRead.boundType) {
                         //It's a CV Result
                     	Z21ResponseLanXCVResult z21BroadcastLanXCVRead = (Z21ResponseLanXCVResult) response;
-
                         for (Z21ResponseListener listener : responseListeners){
                             for (ResponseTypes type : listener.getListenerTypes()){
                                 if (type == ResponseTypes.LAN_X_CV_RESULT)
@@ -144,9 +143,8 @@ public class Z21 implements Runnable{
                             }
                         }
                     } else if (response.boundType == Z21ResponseAndBroadcastCollection.lanXCvNACK.boundType) {
-                        //It's a CV Result
+                        //It's a message that CV manipulation went wrong.
                         Z21ResponseLanXCVNACK z21BroadcastLanXCVNACK = (Z21ResponseLanXCVNACK) response;
-
                         for (Z21ResponseListener listener : responseListeners){
                             for (ResponseTypes type : listener.getListenerTypes()){
                                 if (type == ResponseTypes.LAN_X_CV_NACK)

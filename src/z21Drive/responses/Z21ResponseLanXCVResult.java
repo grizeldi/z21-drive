@@ -1,7 +1,7 @@
 package z21Drive.responses;
 
 /**
- * Result for the Actoin_Lan_X_CV_Read
+ * Result for the Action_Lan_X_CV_Read
  */
 public class Z21ResponseLanXCVResult extends Z21Response{
 	private int cvadr;
@@ -20,7 +20,7 @@ public class Z21ResponseLanXCVResult extends Z21Response{
         byte cvadr_LSB = byteRepresentation [7];
         
         cvadr = ((cvadr_MSB & 0x3F) << 8 | cvadr_LSB) + 1; // 0 = CV1, ...
-        value = (int) (byteRepresentation [8] & 255); 
+        value = byteRepresentation [8] & 255;
     } 
 
 	public int getCvadr() {
@@ -31,8 +31,4 @@ public class Z21ResponseLanXCVResult extends Z21Response{
 	public int getValue() {
 		return value;
 	}
-
-    
-    
-
 }
