@@ -7,8 +7,8 @@ package z21Drive.actions;
 public class Z21ActionGetSerialNumber extends Z21Action{
 
     public Z21ActionGetSerialNumber(){
-        byteRepresentation.add((byte) 0x00);
         byteRepresentation.add((byte) 0x10);
+        byteRepresentation.add((byte) 0x00);
         addLenByte();
     }
 
