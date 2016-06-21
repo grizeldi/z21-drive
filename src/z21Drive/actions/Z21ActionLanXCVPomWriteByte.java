@@ -17,7 +17,7 @@ public class Z21ActionLanXCVPomWriteByte extends Z21Action{
         byteRepresentation.add(Byte.decode("0x00"));
         if (locoAddress < 1 || locoAddress > 63)
             throw new LocoAddressOutOfRangeException(locoAddress);
-        addDataToByteRepresentation(new Object[]{ locoAddress, cv});
+        addDataToByteRepresentation(new Object[]{ locoAddress, cv, value});
         addLenByte();
     }
 
@@ -45,9 +45,10 @@ public class Z21ActionLanXCVPomWriteByte extends Z21Action{
 
         // Adding CV
         int cv = (int) objs[1] - 1; // 0 => CV1, ...
+        int value = (int) objs[2];
         byteRepresentation.add((byte) (0xEC | cv >> 8 )); // DB3 
         byteRepresentation.add((byte) (cv & 0xFF)); // DB4
-        byteRepresentation.add((byte) objs[2]); // DB5
+        byteRepresentation.add((byte) (value & 0xFF)); // DB5
         byteRepresentation.add((byte) (byteRepresentation.get(2) & 0xff ^ byteRepresentation.get(3) & 0xff^ byteRepresentation.get(4) & 0xff^ byteRepresentation.get(5) & 0xff^ byteRepresentation.get(6) & 0xff^ byteRepresentation.get(7) & 0xff^ byteRepresentation.get(8) & 0xff));
     }
 }
