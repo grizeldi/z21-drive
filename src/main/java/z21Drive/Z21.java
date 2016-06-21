@@ -63,6 +63,15 @@ public class Z21 implements Runnable{
         }));
     }
 
+    /**
+     * 
+     * @param delay Delay for the KeepAliveTimer
+     */
+    public void setKeepAliveTimer(int delay) {
+    	keepAliveTimer.setInitialDelay(delay);
+        keepAliveTimer.setDelay(delay);
+        keepAliveTimer.restart();
+    }
     
     private void initKeepAliveTimer(){
         Timer keepAliveTimer = new Timer(30000,  e -> sendActionToZ21(new Z21ActionGetSerialNumber()));
@@ -71,14 +80,6 @@ public class Z21 implements Runnable{
     }
 
     
-    /**
-     * 
-     * @param delay Delay for the KeepAliveTimer
-     */
-    public void setKeepAliveTimer(int delay) {
-    	keepAliveTimer.setDelay(delay);
-
-    }    
     
     /**
      * Used to send the packet to z21.
@@ -164,6 +165,7 @@ public class Z21 implements Runnable{
     public void shutdown(){
         Logger.getLogger("Z21").info("Shutting down all communication.");
         sendActionToZ21(new Z21ActionLanLogoff());
+        keepAliveTimer.stop();
         exit = true;
         socket.close();
     }
