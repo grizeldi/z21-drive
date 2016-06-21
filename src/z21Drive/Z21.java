@@ -66,7 +66,9 @@ public class Z21 implements Runnable{
     }
 
     public void setKeepAliveTimer(int delay) {
+    	keepAliveTimer.setInitialDelay(delay);
         keepAliveTimer.setDelay(delay);
+        keepAliveTimer.restart();
     }
     
     private void initKeepAliveTimer(){
@@ -237,6 +239,7 @@ public class Z21 implements Runnable{
     public void shutdown(){
         Logger.getLogger("Z21").info("Shutting down all communication.");
         sendActionToZ21(new Z21ActionLanLogoff());
+        keepAliveTimer.stop();
         exit = true;
         socket.close();
     }
