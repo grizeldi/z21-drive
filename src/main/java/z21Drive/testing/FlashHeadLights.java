@@ -18,16 +18,13 @@ public class FlashHeadLights implements Runnable{
     }
 
     private FlashHeadLights(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(30000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                exit = true;
+        new Thread(() -> {
+            try {
+                Thread.sleep(30000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+            exit = true;
         }).start();
     }
 

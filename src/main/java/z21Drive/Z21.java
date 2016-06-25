@@ -40,6 +40,7 @@ public class Z21 implements Runnable{
         }catch (SocketException e){
             Logger.getLogger("Z21 init").warning("Failed to open socket to Z21..." + e);
         }
+        listenerThread.setDaemon(true);
         listenerThread.start();
         addBroadcastListener(new Z21BroadcastListener() {
             @Override
@@ -57,21 +58,13 @@ public class Z21 implements Runnable{
         });
         initKeepAliveTimer();
         //Make sure z21 shuts down communication gracefully
-        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-            @Override
-            public void run() {
-                shutdown();
-            }
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            shutdown();
         }));
     }
 
     private void initKeepAliveTimer(){
-        Timer keepAliveTimer = new Timer(keepAliveTimeout, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                sendActionToZ21(new Z21ActionGetSerialNumber());
-            }
-        });
+        Timer keepAliveTimer = new Timer(keepAliveTimeout, e -> sendActionToZ21(new Z21ActionGetSerialNumber()));
         keepAliveTimer.stop();
         keepAliveTimer.setInitialDelay(keepAliveTimeout);
         keepAliveTimer.setRepeats(true);
@@ -112,93 +105,20 @@ public class Z21 implements Runnable{
                 //Determine if it's a response or a broadcast
                 if (PacketConverter.responseFromPacket(packet) != null){
                     Z21Response response = PacketConverter.responseFromPacket(packet);
-                    //Narrow the class definition
-                    if (response.boundType == Z21ResponseAndBroadcastCollection.getSerialNumber.boundType){
-                        //It's a serial number
-                        Z21ResponseGetSerialNumber z21ResponseGetSerialNumber = (Z21ResponseGetSerialNumber) response;
-                        //Deliver it
-                        for (Z21ResponseListener listener : responseListeners){
-                            for (ResponseTypes type : listener.getListenerTypes()){
-                                if (type == ResponseTypes.LAN_GET_SERIAL_NUMBER_RESPONSE)
-                                    listener.responseReceived(ResponseTypes.LAN_GET_SERIAL_NUMBER_RESPONSE, z21ResponseGetSerialNumber);
-                            }
-                        }
-                    } else if (response.boundType == Z21ResponseAndBroadcastCollection.lanXGetFirmwareVersion.boundType){
-                        //It's firmware
-                        Z21ResponseLanXGetFirmwareVersion z21ResponseLanXGetFirmwareVersion = (Z21ResponseLanXGetFirmwareVersion) response;
-                        //Deliver it
-                        for (Z21ResponseListener listener : responseListeners){
-                            for (ResponseTypes type : listener.getListenerTypes()){
-                                if (type == ResponseTypes.LAN_X_GET_FIRMWARE_VERSION)
-                                    listener.responseReceived(ResponseTypes.LAN_X_GET_FIRMWARE_VERSION, z21ResponseLanXGetFirmwareVersion);
-                            }
-                        }
-                    } else if (response.boundType == Z21ResponseAndBroadcastCollection.lanXCvRead.boundType) {
-                        //It's a CV Result
-                    	Z21ResponseLanXCVResult z21BroadcastLanXCVRead = (Z21ResponseLanXCVResult) response;
-                        for (Z21ResponseListener listener : responseListeners){
-                            for (ResponseTypes type : listener.getListenerTypes()){
-                                if (type == ResponseTypes.LAN_X_CV_RESULT)
-                                    listener.responseReceived(ResponseTypes.LAN_X_CV_RESULT, z21BroadcastLanXCVRead);
-                            }
-                        }
-                    } else if (response.boundType == Z21ResponseAndBroadcastCollection.lanXCvNACK.boundType) {
-                        //It's a message that CV manipulation went wrong.
-                        Z21ResponseLanXCVNACK z21BroadcastLanXCVNACK = (Z21ResponseLanXCVNACK) response;
-                        for (Z21ResponseListener listener : responseListeners){
-                            for (ResponseTypes type : listener.getListenerTypes()){
-                                if (type == ResponseTypes.LAN_X_CV_NACK)
-                                    listener.responseReceived(ResponseTypes.LAN_X_CV_NACK, z21BroadcastLanXCVNACK);
+                    for (Z21ResponseListener listener : responseListeners){
+                        for (ResponseTypes type : listener.getListenerTypes()){
+                            if (type == response.boundType){
+                                listener.responseReceived(type, response);
                             }
                         }
                     }
                 }else {
                     Z21Broadcast broadcast = PacketConverter.broadcastFromPacket(packet);
                     if (broadcast != null) {
-                        //Narrow the class definition
-                        if (broadcast.boundType == Z21ResponseAndBroadcastCollection.lanXLocoInfo.boundType) {
-                            //It's a loco info broadcast
-                            Z21BroadcastLanXLocoInfo z21BroadcastLanXLocoInfo = (Z21BroadcastLanXLocoInfo) broadcast;
-                            for (Z21BroadcastListener listener : broadcastListeners) {
-                                for (BroadcastTypes type : listener.getListenerTypes()) {
-                                    if (type == BroadcastTypes.LAN_X_LOCO_INFO)
-                                        listener.onBroadCast(BroadcastTypes.LAN_X_LOCO_INFO, z21BroadcastLanXLocoInfo);
-                                }
-                            }
-                        } else if (broadcast.boundType == Z21ResponseAndBroadcastCollection.lanXUnknownCommand.boundType) {
-                            //It's an unknown command broadcast
-                            Z21BroadcastLanXUnknownCommand z21BroadcastLanXUnknownCommand = (Z21BroadcastLanXUnknownCommand) broadcast;
-                            for (Z21BroadcastListener listener : broadcastListeners) {
-                                for (BroadcastTypes type : listener.getListenerTypes()) {
-                                    if (type == BroadcastTypes.LAN_X_UNKNOWN_COMMAND)
-                                        listener.onBroadCast(BroadcastTypes.LAN_X_UNKNOWN_COMMAND, z21BroadcastLanXUnknownCommand);
-                                }
-                            }
-                        } else if (broadcast.boundType == Z21ResponseAndBroadcastCollection.lanXTrackPowerOff.boundType) {
-                            //It's a track power off broadcast
-                            Z21BroadcastLanXTrackPowerOff z21BroadcastLanXTrackPowerOff = (Z21BroadcastLanXTrackPowerOff) broadcast;
-                            for (Z21BroadcastListener listener : broadcastListeners) {
-                                for (BroadcastTypes type : listener.getListenerTypes()) {
-                                    if (type == BroadcastTypes.LAN_X_TRACK_POWER_OFF)
-                                        listener.onBroadCast(BroadcastTypes.LAN_X_TRACK_POWER_OFF, z21BroadcastLanXTrackPowerOff);
-                                }
-                            }
-                        } else if (broadcast.boundType == Z21ResponseAndBroadcastCollection.lanXTrackPowerOn.boundType) {
-                            //It's a track power on broadcast
-                            Z21BroadcastLanXTrackPowerOn z21BroadcastLanXTrackPowerOn = (Z21BroadcastLanXTrackPowerOn) broadcast;
-                            for (Z21BroadcastListener listener : broadcastListeners) {
-                                for (BroadcastTypes type : listener.getListenerTypes()) {
-                                    if (type == BroadcastTypes.LAN_X_TRACK_POWER_ON)
-                                        listener.onBroadCast(BroadcastTypes.LAN_X_TRACK_POWER_ON, z21BroadcastLanXTrackPowerOn);
-                                }
-                            }
-                        } else if (broadcast.boundType == Z21ResponseAndBroadcastCollection.lanXProgrammingMode.boundType){
-                            //It's a programming mode broadcast
-                            Z21BroadcastLanXProgrammingMode z21BroadcastLanXProgrammingMode = (Z21BroadcastLanXProgrammingMode) broadcast;
-                            for (Z21BroadcastListener listener : broadcastListeners) {
-                                for (BroadcastTypes type : listener.getListenerTypes()) {
-                                    if (type == BroadcastTypes.LAN_X_PROGRAMMING_MODE)
-                                        listener.onBroadCast(BroadcastTypes.LAN_X_PROGRAMMING_MODE, z21BroadcastLanXProgrammingMode);
+                        for (Z21BroadcastListener listener : broadcastListeners){
+                            for (BroadcastTypes type : listener.getListenerTypes()){
+                                if (type == broadcast.boundType){
+                                    listener.onBroadCast(type, broadcast);
                                 }
                             }
                         }

@@ -13,6 +13,7 @@ import z21Drive.broadcasts.Z21BroadcastListener;
  * @see z21Drive.Z21
  */
 public class PrintInfo implements Runnable{
+    boolean finished;
 
     public static void main(String[] args) {
         //Start things up
@@ -36,6 +37,7 @@ public class PrintInfo implements Runnable{
                         System.out.print(b + " ");
                     System.out.print("\n");
                     System.out.println("Array length: " + bc.getByteRepresentation().length);
+                    finished = true;
                 }
             }
 
@@ -49,5 +51,6 @@ public class PrintInfo implements Runnable{
         } catch (LocoAddressOutOfRangeException e) {
             e.printStackTrace();
         }
+        while (!finished){}
     }
 }
