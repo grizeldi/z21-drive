@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="z21-drive">
-    <output-path>$PROJECT_DIR$/out/artifacts/z21_drive</output-path>
-    <root id="archive" name="z21-drive.jar">
-      <element id="module-output" name="z21-drive" />
-    </root>
-  </artifact>
-</component>

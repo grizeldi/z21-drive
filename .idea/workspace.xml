@@ -1,43 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2095804b-5196-4c6c-9600-9714ffb67761" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/LocoAddressOutOfRangeException.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/LocoUtils.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/Z21.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/Z21Constants.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/Z21ResponseAndBroadcastCollection.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/actions/Z21Action.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/actions/Z21ActionGetLocoInfo.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/actions/Z21ActionGetSerialNumber.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/actions/Z21ActionLanLogoff.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/actions/Z21ActionLanXCVRead.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/actions/Z21ActionLanXGetFirmwareVersion.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/actions/Z21ActionLanXTrackPowerOff.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/actions/Z21ActionLanXTrackPowerOn.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/actions/Z21ActionSetLocoDrive.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/actions/Z21ActionSetLocoFunction.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/broadcasts/BroadcastFlagHandler.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/broadcasts/BroadcastFlags.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/broadcasts/BroadcastTypes.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/broadcasts/Z21Broadcast.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/broadcasts/Z21BroadcastLanXLocoInfo.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/broadcasts/Z21BroadcastLanXProgrammingMode.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/broadcasts/Z21BroadcastLanXTrackPowerOff.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/broadcasts/Z21BroadcastLanXTrackPowerOn.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/broadcasts/Z21BroadcastLanXUnknownCommand.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/broadcasts/Z21BroadcastListener.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/responses/ResponseTypes.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/responses/Z21Response.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/responses/Z21ResponseGetSerialNumber.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/responses/Z21ResponseLanXCVNACK.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/responses/Z21ResponseLanXCVResult.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/responses/Z21ResponseLanXGetFirmwareVersion.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/responses/Z21ResponseListener.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/testing/BackAndForth.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/testing/FlashHeadLights.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/testing/PrintInfo.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/z21Drive/testing/TestCV.java" afterPath="" />
+    <list default="true" id="2095804b-5196-4c6c-9600-9714ffb67761" name="Default" comment="Gradlefication">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/oldRepo/.idea/artifacts/z21_drive.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/oldRepo/.idea/uiDesigner.xml" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/LICENCE.md" afterPath="$PROJECT_DIR$/LICENCE.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/LocoAddressOutOfRangeException.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/LocoAddressOutOfRangeException.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/LocoUtils.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/LocoUtils.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/Z21.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/Z21.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/Z21Constants.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/Z21Constants.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/Z21ResponseAndBroadcastCollection.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/Z21ResponseAndBroadcastCollection.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/actions/Z21Action.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/actions/Z21Action.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/actions/Z21ActionGetLocoInfo.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/actions/Z21ActionGetLocoInfo.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/actions/Z21ActionGetSerialNumber.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/actions/Z21ActionGetSerialNumber.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/actions/Z21ActionLanLogoff.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/actions/Z21ActionLanLogoff.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/actions/Z21ActionLanXCVRead.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/actions/Z21ActionLanXCVRead.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/actions/Z21ActionLanXGetFirmwareVersion.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/actions/Z21ActionLanXGetFirmwareVersion.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/actions/Z21ActionLanXTrackPowerOff.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/actions/Z21ActionLanXTrackPowerOff.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/actions/Z21ActionLanXTrackPowerOn.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/actions/Z21ActionLanXTrackPowerOn.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/actions/Z21ActionSetLocoDrive.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/actions/Z21ActionSetLocoDrive.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/actions/Z21ActionSetLocoFunction.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/actions/Z21ActionSetLocoFunction.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/broadcasts/BroadcastFlagHandler.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/broadcasts/BroadcastFlagHandler.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/broadcasts/BroadcastFlags.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/broadcasts/BroadcastFlags.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/broadcasts/BroadcastTypes.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/broadcasts/BroadcastTypes.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/broadcasts/Z21Broadcast.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/broadcasts/Z21Broadcast.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/broadcasts/Z21BroadcastLanXLocoInfo.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/broadcasts/Z21BroadcastLanXLocoInfo.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/broadcasts/Z21BroadcastLanXProgrammingMode.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/broadcasts/Z21BroadcastLanXProgrammingMode.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/broadcasts/Z21BroadcastLanXTrackPowerOff.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/broadcasts/Z21BroadcastLanXTrackPowerOff.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/broadcasts/Z21BroadcastLanXTrackPowerOn.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/broadcasts/Z21BroadcastLanXTrackPowerOn.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/broadcasts/Z21BroadcastLanXUnknownCommand.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/broadcasts/Z21BroadcastLanXUnknownCommand.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/broadcasts/Z21BroadcastListener.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/broadcasts/Z21BroadcastListener.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/responses/ResponseTypes.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/responses/ResponseTypes.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/responses/Z21Response.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/responses/Z21Response.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/responses/Z21ResponseGetSerialNumber.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/responses/Z21ResponseGetSerialNumber.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/responses/Z21ResponseLanXCVNACK.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/responses/Z21ResponseLanXCVNACK.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/responses/Z21ResponseLanXCVResult.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/responses/Z21ResponseLanXCVResult.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/responses/Z21ResponseLanXGetFirmwareVersion.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/responses/Z21ResponseLanXGetFirmwareVersion.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/responses/Z21ResponseListener.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/responses/Z21ResponseListener.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/testing/BackAndForth.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/testing/BackAndForth.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/testing/FlashHeadLights.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/testing/FlashHeadLights.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/testing/PrintInfo.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/testing/PrintInfo.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/testing/TestCV.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/testing/TestCV.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="z21Drive.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -423,7 +429,6 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1920" />
     <option name="y" value="-4" />
     <option name="width" value="1920" />
     <option name="height" value="1084" />
@@ -504,6 +509,14 @@
               <option name="myItemId" value="main" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="z21Drive" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -537,6 +550,8 @@
       <recent name="$PROJECT_DIR$/src/main/java" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/src/main/java" />
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
@@ -955,7 +970,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1466870607264</updated>
-      <workItem from="1466870609040" duration="1150000" />
+      <workItem from="1466870609040" duration="1310000" />
     </task>
     <task id="LOCAL-00001" summary="Gradlefication">
       <created>1466871559931</created>
@@ -968,10 +983,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1150000" />
+    <option name="totallyTimeSpent" value="1310000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1920" y="-4" width="1920" height="1084" extended-state="6" />
+    <frame x="0" y="-4" width="1920" height="1084" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -982,10 +997,10 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32916668" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32916668" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2497332" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2497332" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
