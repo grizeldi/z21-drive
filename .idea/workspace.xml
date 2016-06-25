@@ -2,48 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2095804b-5196-4c6c-9600-9714ffb67761" name="Default" comment="Gradlefication">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/oldRepo/.idea/artifacts/z21_drive.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/oldRepo/.idea/uiDesigner.xml" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/LICENCE.md" afterPath="$PROJECT_DIR$/LICENCE.md" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/LocoAddressOutOfRangeException.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/LocoAddressOutOfRangeException.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/LocoUtils.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/LocoUtils.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/Z21.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/Z21.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/Z21Constants.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/Z21Constants.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/Z21ResponseAndBroadcastCollection.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/Z21ResponseAndBroadcastCollection.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/actions/Z21Action.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/actions/Z21Action.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/actions/Z21ActionGetLocoInfo.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/actions/Z21ActionGetLocoInfo.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/actions/Z21ActionGetSerialNumber.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/actions/Z21ActionGetSerialNumber.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/actions/Z21ActionLanLogoff.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/actions/Z21ActionLanLogoff.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/actions/Z21ActionLanXCVRead.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/actions/Z21ActionLanXCVRead.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/actions/Z21ActionLanXGetFirmwareVersion.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/actions/Z21ActionLanXGetFirmwareVersion.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/actions/Z21ActionLanXTrackPowerOff.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/actions/Z21ActionLanXTrackPowerOff.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/actions/Z21ActionLanXTrackPowerOn.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/actions/Z21ActionLanXTrackPowerOn.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/actions/Z21ActionSetLocoDrive.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/actions/Z21ActionSetLocoDrive.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/actions/Z21ActionSetLocoFunction.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/actions/Z21ActionSetLocoFunction.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/broadcasts/BroadcastFlagHandler.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/broadcasts/BroadcastFlagHandler.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/broadcasts/BroadcastFlags.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/broadcasts/BroadcastFlags.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/broadcasts/BroadcastTypes.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/broadcasts/BroadcastTypes.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/broadcasts/Z21Broadcast.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/broadcasts/Z21Broadcast.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/broadcasts/Z21BroadcastLanXLocoInfo.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/broadcasts/Z21BroadcastLanXLocoInfo.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/broadcasts/Z21BroadcastLanXProgrammingMode.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/broadcasts/Z21BroadcastLanXProgrammingMode.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/broadcasts/Z21BroadcastLanXTrackPowerOff.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/broadcasts/Z21BroadcastLanXTrackPowerOff.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/broadcasts/Z21BroadcastLanXTrackPowerOn.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/broadcasts/Z21BroadcastLanXTrackPowerOn.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/broadcasts/Z21BroadcastLanXUnknownCommand.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/broadcasts/Z21BroadcastLanXUnknownCommand.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/broadcasts/Z21BroadcastListener.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/broadcasts/Z21BroadcastListener.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/responses/ResponseTypes.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/responses/ResponseTypes.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/responses/Z21Response.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/responses/Z21Response.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/responses/Z21ResponseGetSerialNumber.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/responses/Z21ResponseGetSerialNumber.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/responses/Z21ResponseLanXCVNACK.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/responses/Z21ResponseLanXCVNACK.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/responses/Z21ResponseLanXCVResult.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/responses/Z21ResponseLanXCVResult.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/responses/Z21ResponseLanXGetFirmwareVersion.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/responses/Z21ResponseLanXGetFirmwareVersion.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/responses/Z21ResponseListener.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/responses/Z21ResponseListener.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/testing/BackAndForth.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/testing/BackAndForth.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/testing/FlashHeadLights.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/testing/FlashHeadLights.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/testing/PrintInfo.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/testing/PrintInfo.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/oldRepo/src/z21Drive/testing/TestCV.java" afterPath="$PROJECT_DIR$/src/main/java/z21Drive/testing/TestCV.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
     </list>
     <ignored path="z21Drive.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -79,12 +38,22 @@
     <favorites_list name="z21Drive" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="true">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="72">
               <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="450">
+              <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -412,6 +381,7 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/build.gradle" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -458,8 +428,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -535,6 +503,8 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -770,6 +740,7 @@
       <setting name="cmdLine" value="run-app" />
       <setting name="passParentEnv" value="true" />
       <setting name="launchBrowser" value="true" />
+      <setting name="depsClasspath" value="false" />
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <method />
     </configuration>
@@ -944,6 +915,12 @@
       <method />
     </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <envs />
       <method />
     </configuration>
     <configuration default="true" type="js.build_tools.npm" factoryName="npm">
@@ -971,6 +948,7 @@
       <option name="presentableId" value="Default" />
       <updated>1466870607264</updated>
       <workItem from="1466870609040" duration="1310000" />
+      <workItem from="1466872231648" duration="18000" />
     </task>
     <task id="LOCAL-00001" summary="Gradlefication">
       <created>1466871559931</created>
@@ -983,37 +961,37 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1310000" />
+    <option name="totallyTimeSpent" value="1328000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="-4" width="1920" height="1084" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32916668" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2497332" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32916668" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2497332" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -1028,6 +1006,14 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/settings.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1036,19 +1022,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/squid.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="3" column="18" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/squid.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/z21Drive/actions/Z21Action.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1056,6 +1034,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
           <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
           <folding />
         </state>
       </provider>
