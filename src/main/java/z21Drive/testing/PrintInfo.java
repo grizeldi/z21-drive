@@ -14,10 +14,15 @@ import z21Drive.broadcasts.Z21BroadcastListener;
  */
 public class PrintInfo implements Runnable{
     boolean finished;
+    int locoAdress;
 
     public static void main(String[] args) {
         //Start things up
-        new Thread(new PrintInfo()).start();
+        new Thread(new PrintInfo(Integer.parseInt(args[0]))).start();
+    }
+
+    public PrintInfo(int locoAdress) {
+        this.locoAdress = locoAdress;
     }
 
     public void run(){
@@ -47,7 +52,7 @@ public class PrintInfo implements Runnable{
             }
         });
         try {
-            z21.sendActionToZ21(new Z21ActionGetLocoInfo(5));
+            z21.sendActionToZ21(new Z21ActionGetLocoInfo(locoAdress));
         } catch (LocoAddressOutOfRangeException e) {
             e.printStackTrace();
         }

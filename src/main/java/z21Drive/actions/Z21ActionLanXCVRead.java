@@ -4,6 +4,7 @@ import z21Drive.LocoAddressOutOfRangeException;
 
 /**
  * Request a CV Value
+ * @author littleyoda
  */
 public class Z21ActionLanXCVRead extends Z21Action{
 

@@ -15,7 +15,7 @@ public class Z21ActionGetLocoInfo extends Z21Action{
     public Z21ActionGetLocoInfo(int locoAddress) throws LocoAddressOutOfRangeException{
         byteRepresentation.add(Byte.decode("0x40"));
         byteRepresentation.add(Byte.decode("0x00"));
-        if (locoAddress < 1 || locoAddress > 63)
+        if (locoAddress < 1)
             throw new LocoAddressOutOfRangeException(locoAddress);
         addDataToByteRepresentation(new Object[]{locoAddress});
         addLenByte();
@@ -26,18 +26,8 @@ public class Z21ActionGetLocoInfo extends Z21Action{
         //Add all the data
         byteRepresentation.add((byte)(int)Integer.decode("0xE3"));
         byteRepresentation.add((byte)(int)Integer.decode("0xF0"));
-        byte Adr_MSB;
-        byte Adr_LSB;
-        //Made working in attempt number 3
-        String binary = String.format("%16s", Integer.toBinaryString((Integer) objs[0])).replace(' ', '0');
-        String binaryMSB = binary.substring(0, 8);
-        String binaryLSB = binary.substring(8);
-
-        if (binary.replaceFirst ("^0*", "").toCharArray().length <= 8)
-            Adr_MSB = 0;
-        else
-            Adr_MSB = (byte) Integer.parseInt(binaryMSB, 2);
-        Adr_LSB = (byte) Integer.parseInt(binaryLSB, 2);
+        byte Adr_MSB = (byte) (((Integer)objs[0]) >> 8);
+        byte Adr_LSB = (byte) (((Integer)objs[0]) & 0b11111111);
 
         byteRepresentation.add(Adr_MSB);
         byteRepresentation.add(Adr_LSB);
