@@ -1,4 +1,4 @@
-# z21-drive
+# z21-drive [![Build Status](https://travis-ci.org/grizeldi/z21-drive.svg?branch=main)](https://travis-ci.org/grizeldi/z21-drive)
 A low level Java API for driving model trains with Fleischmann/Roco z21 DCC centre which takes care of wrapping your data into data that your z21 understands.
 Meant for custom train controllers (cabs, control sticks...) and layout automation. Supports loco addresses up to 127.
 
