@@ -1,23 +1,35 @@
 package z21Drive;
 
-import z21Drive.actions.Z21Action;
-import z21Drive.actions.Z21ActionGetSerialNumber;
-import z21Drive.actions.Z21ActionLanLogoff;
-import z21Drive.broadcasts.*;
-import z21Drive.responses.*;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
+
+import javax.swing.Timer;
+
+import z21Drive.actions.Z21Action;
+import z21Drive.actions.Z21ActionGetSerialNumber;
+import z21Drive.actions.Z21ActionLanLogoff;
+import z21Drive.broadcasts.BroadcastTypes;
+import z21Drive.broadcasts.Z21Broadcast;
+import z21Drive.broadcasts.Z21BroadcastLanXLocoInfo;
+import z21Drive.broadcasts.Z21BroadcastLanXProgrammingMode;
+import z21Drive.broadcasts.Z21BroadcastLanXTrackPowerOff;
+import z21Drive.broadcasts.Z21BroadcastLanXTrackPowerOn;
+import z21Drive.broadcasts.Z21BroadcastLanXUnknownCommand;
+import z21Drive.broadcasts.Z21BroadcastListener;
+import z21Drive.responses.ResponseTypes;
+import z21Drive.responses.Z21Response;
+import z21Drive.responses.Z21ResponseGetSerialNumber;
+import z21Drive.responses.Z21ResponseLanXCVNACK;
+import z21Drive.responses.Z21ResponseLanXCVResult;
+import z21Drive.responses.Z21ResponseLanXGetFirmwareVersion;
+import z21Drive.responses.Z21ResponseListener;
+import z21Drive.responses.Z21ResponseRailcomDatachanged;
 
 /**
  * Main class in this library which represents Z21 and handles all communication with it.
@@ -75,7 +87,7 @@ public class Z21 implements Runnable{
     }
     
     private void initKeepAliveTimer(){
-        Timer keepAliveTimer = new Timer(30000,  e -> sendActionToZ21(new Z21ActionGetSerialNumber()));
+        keepAliveTimer = new Timer(30000,  e -> sendActionToZ21(new Z21ActionGetSerialNumber()));
         keepAliveTimer.setRepeats(true);
         keepAliveTimer.start();
     }
