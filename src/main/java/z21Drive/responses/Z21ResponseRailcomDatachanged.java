@@ -1,10 +1,17 @@
 package z21Drive.responses;
 
-import java.util.Arrays;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * Handels a RailCom-Response
+ * @author sven
+ *
+ */
 public class Z21ResponseRailcomDatachanged extends Z21Response {
 
+	private List<RailComData> data = new ArrayList<RailComData>();
+	
     public Z21ResponseRailcomDatachanged(byte[] initArray) {
         super(initArray);
         boundType = ResponseTypes.LAN_RAILCOM_DATACHANGED;
@@ -14,24 +21,17 @@ public class Z21ResponseRailcomDatachanged extends Z21Response {
 
     private void populateFields(){
     	int nrOfDecoders = ((getByteRepresentation()[0] & 0xFF) - 4) / 13; 
-    	System.out.println("Found " + nrOfDecoders);
     	for (int idx = 0; idx < nrOfDecoders; idx++) {
-    		analyse(4 + idx * 13);
+    		data.add(analyse(4 + idx * 13));
     	}
-//        byte cvadr_MSB = byteRepresentation [6];
-//        byte cvadr_LSB = byteRepresentation [7];
-//        
-//        cvAdr = ((cvadr_MSB & 0x3F) << 8 | cvadr_LSB) + 1; // 0 = CV1, ...
-//        value = byteRepresentation [8] & 255;
     }
 
-	private void analyse(int i) {
+	private RailComData analyse(int i) {
 		Integer[] data = new Integer[13];
 		for (int idx = i; idx < (i + 13); idx++) {
-            System.out.print("0x" + String.format("%02X ", byteRepresentation[idx]));
+//            System.out.print("0x" + String.format("%02X ", byteRepresentation[idx]));
             data[idx - i] = (int) ( byteRepresentation[idx] & 0xFF);
 		}
-		System.out.println();
 
 		int locId = data[0] 
 				    + (data[1]  << 8);
@@ -39,24 +39,57 @@ public class Z21ResponseRailcomDatachanged extends Z21Response {
              			   + (data[3] << 8)
 							+ (data[4] << 16)
 							+ (data[5] << 24);
-		int errorCounter = data[6] & 0xFF
+		int errorCounter = data[6] 
  			    + (data[7]<< 8)
 				+ (data[8] << 16)
 				+ (data[9]<< 24);
 		int speed = data[10];
 		int options = data[11];
 		int temp = data[12];
-		System.out.println("Id: " + locId + " Received: " + receiveCounter + " Error: " + errorCounter + " Speed: " + speed + " Options: " + options + " Temp: " + temp);
-		// TODO Auto-generated method stub
-		
+		return new RailComData(locId, receiveCounter, errorCounter, speed, options, temp);
 	} 
 
-//	public int getCVadr() {
-//		return cvAdr;
-//	}
-//
-//	public int getValue() {
-//		return value;
-//	}
+	public class RailComData {
+		public RailComData(int locId, int receiveCounter, int errorCounter, int speed, int options, int temp) {
+			super();
+			this.locId = locId;
+			this.receiveCounter = receiveCounter;
+			this.errorCounter = errorCounter;
+			this.speed = speed;
+			this.options = options;
+			this.temp = temp;
+		}
+		private int locId;
+		private int receiveCounter;
+		private int errorCounter;
+		private int speed;
+		private int options;
+		private int temp;
+		public int getLocId() {
+			return locId;
+		}
+		public int getReceiveCounter() {
+			return receiveCounter;
+		}
+		public int getErrorCounter() {
+			return errorCounter;
+		}
+		public int getSpeed() {
+			return speed;
+		}
+		public int getOptions() {
+			return options;
+		}
+		public int getTemp() {
+			return temp;
+		}
+		
+		@Override
+		public String toString() {
+			return "RailComData [locId=" + locId + ", receiveCounter=" + receiveCounter + ", errorCounter="
+					+ errorCounter + ", speed=" + speed + ", options=" + options + ", temp=" + temp + "]";
+		}
+		
+	}
 
 }
