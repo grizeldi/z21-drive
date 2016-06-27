@@ -15,6 +15,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -203,6 +204,8 @@ class PacketConverter {
             return new Z21ResponseLanXCVResult(array);
         else if (header1 == 0x40 && header2 == 0x00 && xHeader == 0x61 && (array[5] & 255) == 0x13)
             return new Z21ResponseLanXCVNACK(array);
+        else if ((header1 & 0xFF) == 0x88 && header2 == 0x00)
+            return new Z21ResponseRailcomDatachanged(array);
         return null;
     }
 
