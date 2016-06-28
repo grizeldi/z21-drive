@@ -9,7 +9,7 @@ notifications:
 
 deploy:
   provider: releases
-  api_key: d74a61d0d458e70bb2257e72be3fbbb098381f9a
+  api_key: 69ea3670f5d71d899a0c09d1b9ba215b6996b1e6
   file: build/libs/*
   skip_cleanup: true
   on:
