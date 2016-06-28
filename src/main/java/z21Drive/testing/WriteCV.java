@@ -1,11 +1,8 @@
 package z21Drive.testing;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import z21Drive.LocoAddressOutOfRangeException;
 import z21Drive.Z21;
-import z21Drive.actions.Z21ActionLanXCVRead;
+import z21Drive.actions.Z21ActionLanXCVWrite;
 import z21Drive.actions.Z21ActionLanXTrackPowerOff;
 import z21Drive.actions.Z21ActionLanXTrackPowerOn;
 import z21Drive.responses.ResponseTypes;
@@ -14,15 +11,22 @@ import z21Drive.responses.Z21ResponseLanXCVResult;
 import z21Drive.responses.Z21ResponseListener;
 
 /**
- * Reads the CV Number of the Loco 
- * @see z21Drive.Z21
+ * 
+ * 
+ * BE CAREFUL!
+ * 
+ * This Class writes a new Loco ID to CV 1
+ * 
+ * BE CAREFUL!
+ * 
+ * 
  */
-public class TestCV implements Runnable{
+public class WriteCV implements Runnable{
 
-	ArrayList<Integer> cvs =  new ArrayList<Integer>(Arrays.asList(new Integer[]{1, 30}));
     public static void main(String[] args) {
         //Start things up
-        new Thread(new TestCV()).start();
+        new Thread(new WriteCV()).start();
+        while (true){}
     }
 
     public void run(){
@@ -32,16 +36,19 @@ public class TestCV implements Runnable{
             @Override
             public void responseReceived(ResponseTypes type, Z21Response response) {
                 if (type == ResponseTypes.LAN_X_CV_RESULT){
+                	// Output of the Results Response
                 	Z21ResponseLanXCVResult bc = (Z21ResponseLanXCVResult) response;
                     String o = Integer.toBinaryString(bc.getValue());
                     while (o.length() < 8) {
                     	o = "0" + o;
                     }
                     System.out.println(String.format("%3d: %3d %s", bc.getCVadr(), bc.getValue(), o));
-                    sendNext(z21);
                 } else if (type == ResponseTypes.LAN_X_CV_NACK){
-                	System.out.println("Read CV failed.");
+                	System.out.println("Write CV failed.");
                 }
+                // Active Track Power
+    			z21.sendActionToZ21(new Z21ActionLanXTrackPowerOn());
+    			System.exit(0);
             }
 
             @Override
@@ -53,16 +60,10 @@ public class TestCV implements Runnable{
     }
 
 	private void sendNext(Z21 z21) {
-		if (cvs.size() == 0) {
-			z21.sendActionToZ21(new Z21ActionLanXTrackPowerOn());
-			System.exit(1);
-		}
-		Integer cv = cvs.get(0);
-		cvs.remove(0);
-        try {
-			z21.sendActionToZ21(new Z21ActionLanXCVRead(cv));
-		} catch (LocoAddressOutOfRangeException e) {
-			e.printStackTrace();
-		}
+			try {
+				z21.sendActionToZ21(new Z21ActionLanXCVWrite(1, 7));
+			} catch (LocoAddressOutOfRangeException e) {
+				e.printStackTrace();
+			}
 	}
 }

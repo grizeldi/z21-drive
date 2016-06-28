@@ -5,8 +5,7 @@ import java.util.Arrays;
 
 import z21Drive.LocoAddressOutOfRangeException;
 import z21Drive.Z21;
-import z21Drive.actions.Z21ActionLanXCVRead;
-import z21Drive.actions.Z21ActionLanXTrackPowerOff;
+import z21Drive.actions.Z21ActionLanXCVPomReadByte;
 import z21Drive.actions.Z21ActionLanXTrackPowerOn;
 import z21Drive.responses.ResponseTypes;
 import z21Drive.responses.Z21Response;
@@ -14,20 +13,21 @@ import z21Drive.responses.Z21ResponseLanXCVResult;
 import z21Drive.responses.Z21ResponseListener;
 
 /**
- * Reads the CV Number of the Loco 
+ * Reads the CV Number of the Loco via RailCom
  * @see z21Drive.Z21
  */
-public class TestCV implements Runnable{
+public class TestRailComCV implements Runnable{
 
-	ArrayList<Integer> cvs =  new ArrayList<Integer>(Arrays.asList(new Integer[]{1, 30}));
+	ArrayList<Integer> cvs =  new ArrayList<Integer>(Arrays.asList(new Integer[]{1, 28, 29, 30}));
     public static void main(String[] args) {
         //Start things up
-        new Thread(new TestCV()).start();
+        new Thread(new TestRailComCV()).start();
+        while (true){}
     }
 
     public void run(){
         final Z21 z21 = Z21.instance;
-        z21.sendActionToZ21(new Z21ActionLanXTrackPowerOff());
+        z21.sendActionToZ21(new Z21ActionLanXTrackPowerOn());
         z21.addResponseListener(new Z21ResponseListener() {
             @Override
             public void responseReceived(ResponseTypes type, Z21Response response) {
@@ -41,6 +41,7 @@ public class TestCV implements Runnable{
                     sendNext(z21);
                 } else if (type == ResponseTypes.LAN_X_CV_NACK){
                 	System.out.println("Read CV failed.");
+                    System.exit(-1);
                 }
             }
 
@@ -60,7 +61,7 @@ public class TestCV implements Runnable{
 		Integer cv = cvs.get(0);
 		cvs.remove(0);
         try {
-			z21.sendActionToZ21(new Z21ActionLanXCVRead(cv));
+			z21.sendActionToZ21(new Z21ActionLanXCVPomReadByte(7, cv));
 		} catch (LocoAddressOutOfRangeException e) {
 			e.printStackTrace();
 		}

@@ -1,14 +1,5 @@
 package z21Drive;
 
-import z21Drive.actions.Z21Action;
-import z21Drive.actions.Z21ActionGetSerialNumber;
-import z21Drive.actions.Z21ActionLanLogoff;
-import z21Drive.broadcasts.*;
-import z21Drive.responses.*;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -17,6 +8,14 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+
+import javax.swing.Timer;
+
+import z21Drive.actions.Z21Action;
+import z21Drive.actions.Z21ActionGetSerialNumber;
+import z21Drive.actions.Z21ActionLanLogoff;
+import z21Drive.broadcasts.*;
+import z21Drive.responses.*;
 
 /**
  * Main class in this library which represents Z21 and handles all communication with it.
@@ -30,7 +29,7 @@ public class Z21 implements Runnable{
     private List<Z21ResponseListener> responseListeners = new ArrayList<Z21ResponseListener>();
     private List<Z21BroadcastListener> broadcastListeners = new ArrayList<Z21BroadcastListener>();
     private DatagramSocket socket;
-    private static final int keepAliveTimeout = 30000;
+	private final Timer keepAliveTimer;
 
     private Z21() {
         Logger.getLogger("Z21 init").info("Z21 initializing");
@@ -48,7 +47,7 @@ public class Z21 implements Runnable{
                 if (type == BroadcastTypes.LAN_X_UNKNOWN_COMMAND)
                     Logger.getLogger("Z21 monitor").warning("Z21 reported receiving an unknown command.");
                 else
-                    Logger.getLogger("Z21 monitor").severe("Broadcast delivery messed up. Please report immediately to gitHub issues what have you done.");
+                    Logger.getLogger("Z21 monitor").severe("Broadcast delivery messed up. Please report immediately to GitHub issues what have you done.");
             }
 
             @Override
@@ -56,21 +55,29 @@ public class Z21 implements Runnable{
                 return new BroadcastTypes[]{BroadcastTypes.LAN_X_UNKNOWN_COMMAND};
             }
         });
+        keepAliveTimer = new Timer(30000,  e -> sendActionToZ21(new Z21ActionGetSerialNumber()));
         initKeepAliveTimer();
         //Make sure z21 shuts down communication gracefully
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            shutdown();
-        }));
+        Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown));
+    }
+
+    /**
+     *
+     * @param delay Delay for the KeepAliveTimer
+     */
+    public void setKeepAliveTimer(int delay) {
+    	keepAliveTimer.setInitialDelay(delay);
+        keepAliveTimer.setDelay(delay);
+        keepAliveTimer.restart();
     }
 
     private void initKeepAliveTimer(){
-        Timer keepAliveTimer = new Timer(keepAliveTimeout, e -> sendActionToZ21(new Z21ActionGetSerialNumber()));
-        keepAliveTimer.stop();
-        keepAliveTimer.setInitialDelay(keepAliveTimeout);
         keepAliveTimer.setRepeats(true);
         keepAliveTimer.start();
     }
 
+    
+    
     /**
      * Used to send the packet to z21.
      * @param action Action to send.
@@ -155,6 +162,7 @@ public class Z21 implements Runnable{
     public void shutdown(){
         Logger.getLogger("Z21").info("Shutting down all communication.");
         sendActionToZ21(new Z21ActionLanLogoff());
+        keepAliveTimer.stop();
         exit = true;
         socket.close();
     }
@@ -192,6 +200,8 @@ class PacketConverter {
             return new Z21ResponseLanXCVResult(array);
         else if (header1 == 0x40 && header2 == 0x00 && xHeader == 0x61 && (array[5] & 255) == 0x13)
             return new Z21ResponseLanXCVNACK(array);
+        else if ((header1 & 0xFF) == 0x88 && header2 == 0x00)
+            return new Z21ResponseRailcomDatachanged(array);
         return null;
     }
 
