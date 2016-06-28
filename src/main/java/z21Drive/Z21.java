@@ -14,22 +14,8 @@ import javax.swing.Timer;
 import z21Drive.actions.Z21Action;
 import z21Drive.actions.Z21ActionGetSerialNumber;
 import z21Drive.actions.Z21ActionLanLogoff;
-import z21Drive.broadcasts.BroadcastTypes;
-import z21Drive.broadcasts.Z21Broadcast;
-import z21Drive.broadcasts.Z21BroadcastLanXLocoInfo;
-import z21Drive.broadcasts.Z21BroadcastLanXProgrammingMode;
-import z21Drive.broadcasts.Z21BroadcastLanXTrackPowerOff;
-import z21Drive.broadcasts.Z21BroadcastLanXTrackPowerOn;
-import z21Drive.broadcasts.Z21BroadcastLanXUnknownCommand;
-import z21Drive.broadcasts.Z21BroadcastListener;
-import z21Drive.responses.ResponseTypes;
-import z21Drive.responses.Z21Response;
-import z21Drive.responses.Z21ResponseGetSerialNumber;
-import z21Drive.responses.Z21ResponseLanXCVNACK;
-import z21Drive.responses.Z21ResponseLanXCVResult;
-import z21Drive.responses.Z21ResponseLanXGetFirmwareVersion;
-import z21Drive.responses.Z21ResponseListener;
-import z21Drive.responses.Z21ResponseRailcomDatachanged;
+import z21Drive.broadcasts.*;
+import z21Drive.responses.*;
 
 /**
  * Main class in this library which represents Z21 and handles all communication with it.
@@ -61,7 +47,7 @@ public class Z21 implements Runnable{
                 if (type == BroadcastTypes.LAN_X_UNKNOWN_COMMAND)
                     Logger.getLogger("Z21 monitor").warning("Z21 reported receiving an unknown command.");
                 else
-                    Logger.getLogger("Z21 monitor").severe("Broadcast delivery messed up. Please report immediately to gitHub issues what have you done.");
+                    Logger.getLogger("Z21 monitor").severe("Broadcast delivery messed up. Please report immediately to GitHub issues what have you done.");
             }
 
             @Override
@@ -71,9 +57,7 @@ public class Z21 implements Runnable{
         });
         initKeepAliveTimer();
         //Make sure z21 shuts down communication gracefully
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            shutdown();
-        }));
+        Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown));
     }
 
     /**
