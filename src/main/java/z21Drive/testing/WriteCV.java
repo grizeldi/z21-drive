@@ -26,6 +26,7 @@ public class WriteCV implements Runnable{
     public static void main(String[] args) {
         //Start things up
         new Thread(new WriteCV()).start();
+        while (true){}
     }
 
     public void run(){
@@ -60,7 +61,7 @@ public class WriteCV implements Runnable{
 
 	private void sendNext(Z21 z21) {
 			try {
-				z21.sendActionToZ21(new Z21ActionLanXCVWrite(1, 2));
+				z21.sendActionToZ21(new Z21ActionLanXCVWrite(1, 7));
 			} catch (LocoAddressOutOfRangeException e) {
 				e.printStackTrace();
 			}

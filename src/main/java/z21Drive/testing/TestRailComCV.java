@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 import z21Drive.LocoAddressOutOfRangeException;
 import z21Drive.Z21;
-import z21Drive.actions.Z21ActionLANXCVPomReadByte;
+import z21Drive.actions.Z21ActionLanXCVPomReadByte;
 import z21Drive.actions.Z21ActionLanXTrackPowerOn;
 import z21Drive.responses.ResponseTypes;
 import z21Drive.responses.Z21Response;
@@ -18,10 +18,11 @@ import z21Drive.responses.Z21ResponseListener;
  */
 public class TestRailComCV implements Runnable{
 
-	ArrayList<Integer> cvs =  new ArrayList<Integer>(Arrays.asList(new Integer[]{1, 28, 29}));
+	ArrayList<Integer> cvs =  new ArrayList<Integer>(Arrays.asList(new Integer[]{1, 28, 29, 30}));
     public static void main(String[] args) {
         //Start things up
         new Thread(new TestRailComCV()).start();
+        while (true){}
     }
 
     public void run(){
@@ -40,6 +41,7 @@ public class TestRailComCV implements Runnable{
                     sendNext(z21);
                 } else if (type == ResponseTypes.LAN_X_CV_NACK){
                 	System.out.println("Read CV failed.");
+                    System.exit(-1);
                 }
             }
 
@@ -59,7 +61,7 @@ public class TestRailComCV implements Runnable{
 		Integer cv = cvs.get(0);
 		cvs.remove(0);
         try {
-			z21.sendActionToZ21(new Z21ActionLANXCVPomReadByte(2, cv));
+			z21.sendActionToZ21(new Z21ActionLanXCVPomReadByte(7, cv));
 		} catch (LocoAddressOutOfRangeException e) {
 			e.printStackTrace();
 		}

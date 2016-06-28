@@ -29,7 +29,7 @@ public class Z21 implements Runnable{
     private List<Z21ResponseListener> responseListeners = new ArrayList<Z21ResponseListener>();
     private List<Z21BroadcastListener> broadcastListeners = new ArrayList<Z21BroadcastListener>();
     private DatagramSocket socket;
-	private Timer keepAliveTimer;
+	private final Timer keepAliveTimer;
 
     private Z21() {
         Logger.getLogger("Z21 init").info("Z21 initializing");
@@ -55,13 +55,14 @@ public class Z21 implements Runnable{
                 return new BroadcastTypes[]{BroadcastTypes.LAN_X_UNKNOWN_COMMAND};
             }
         });
+        keepAliveTimer = new Timer(30000,  e -> sendActionToZ21(new Z21ActionGetSerialNumber()));
         initKeepAliveTimer();
         //Make sure z21 shuts down communication gracefully
         Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown));
     }
 
     /**
-     * 
+     *
      * @param delay Delay for the KeepAliveTimer
      */
     public void setKeepAliveTimer(int delay) {
@@ -69,9 +70,8 @@ public class Z21 implements Runnable{
         keepAliveTimer.setDelay(delay);
         keepAliveTimer.restart();
     }
-    
+
     private void initKeepAliveTimer(){
-        keepAliveTimer = new Timer(30000,  e -> sendActionToZ21(new Z21ActionGetSerialNumber()));
         keepAliveTimer.setRepeats(true);
         keepAliveTimer.start();
     }

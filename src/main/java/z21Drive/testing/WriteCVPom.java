@@ -12,15 +12,11 @@ import z21Drive.responses.Z21ResponseLanXCVResult;
 import z21Drive.responses.Z21ResponseListener;
 
 /**
- * 
- * 
  * BE CAREFUL!
- * 
+ *
  * This Class writes a new Loco ID to CV 1
- * 
+ *
  * BE CAREFUL!
- * 
- * 
  */
 public class WriteCVPom implements Runnable{
 
