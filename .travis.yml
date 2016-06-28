@@ -6,3 +6,13 @@ jdk:
 notifications:
   on_success: never
   on_failure: always
+
+deploy:
+  provider: relases
+  api_key: d74a61d0d458e70bb2257e72be3fbbb098381f9a
+  file: build/libs/*
+  skip_cleanup: true
+  on:
+    tags: true
+    repository: grizeldi/z21-drive
+    branch: main
