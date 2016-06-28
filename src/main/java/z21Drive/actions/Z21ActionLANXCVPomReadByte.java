@@ -2,7 +2,7 @@ package z21Drive.actions;
 
 import z21Drive.LocoAddressOutOfRangeException;
 
-public class Z21ActionLANXCVPomReadByte extends Z21Action{
+public class Z21ActionLanXCVPomReadByte extends Z21Action{
 
     /**
      * Reads a CV via RailCom on the MainTrack
@@ -11,7 +11,7 @@ public class Z21ActionLANXCVPomReadByte extends Z21Action{
      * @param locoAddress the Adress of the Loco
      * @throws LocoAddressOutOfRangeException Thrown if loco address is out of supported range.
      */
-    public Z21ActionLANXCVPomReadByte(int locoAddress, int cv) throws LocoAddressOutOfRangeException{
+    public Z21ActionLanXCVPomReadByte(int locoAddress, int cv) throws LocoAddressOutOfRangeException{
         byteRepresentation.add(Byte.decode("0x40"));
         byteRepresentation.add(Byte.decode("0x00"));
         if (locoAddress < 1 || locoAddress > 63)
