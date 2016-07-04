@@ -12,7 +12,7 @@ public class Z21ActionSetLocoFunction extends Z21Action{
     public Z21ActionSetLocoFunction(int locoAddress, int functionNo, boolean on) throws LocoAddressOutOfRangeException{
         byteRepresentation.add(Byte.decode("0x40"));
         byteRepresentation.add(Byte.decode("0x00"));
-        if (locoAddress < 1 || locoAddress > 128)
+        if (locoAddress < 1)
             throw new LocoAddressOutOfRangeException(locoAddress);
         addDataToByteRepresentation(new Object[]{Integer.valueOf(locoAddress), functionNo, Boolean.valueOf(on)});
         addLenByte();
@@ -22,20 +22,9 @@ public class Z21ActionSetLocoFunction extends Z21Action{
     public void addDataToByteRepresentation(Object[] objs) {
         byteRepresentation.add((byte)0xE4);
         byteRepresentation.add((byte)0xF8);
-        //Generate loco address bytes
-        byte Adr_MSB;
-        byte Adr_LSB;
-        String binary = String.format("%16s", Integer.toBinaryString((Integer) objs[0])).replace(' ', '0');
-        String binaryMSB = binary.substring(0, 8);
-        String binaryLSB = binary.substring(8);
-
-        if (binary.replaceFirst ("^0*", "").toCharArray().length <= 8)
-            Adr_MSB = 0;
-        else
-            Adr_MSB = (byte) Integer.parseInt(binaryMSB, 2);
-        Adr_LSB = (byte) Integer.parseInt(binaryLSB, 2);
-        //Change big address bits
-        if ((Integer) objs[0] > 127){
+        byte Adr_MSB = (byte) (((Integer)objs[0]) >> 8);
+        byte Adr_LSB = (byte) (((Integer)objs[0]) & 0b11111111);
+        if (Adr_MSB != 0){
             Adr_MSB |= 0b11000000;
         }
         byteRepresentation.add(Adr_MSB);

@@ -15,7 +15,7 @@ public class Z21ActionLanXCVPomWriteByte extends Z21Action{
     public Z21ActionLanXCVPomWriteByte(int locoAddress, int cv, int value) throws LocoAddressOutOfRangeException{
         byteRepresentation.add(Byte.decode("0x40"));
         byteRepresentation.add(Byte.decode("0x00"));
-        if (locoAddress < 1 || locoAddress > 63)
+        if (locoAddress < 1)
             throw new LocoAddressOutOfRangeException(locoAddress);
         addDataToByteRepresentation(new Object[]{ locoAddress, cv, value});
         addLenByte();
