@@ -40,29 +40,14 @@ public class Z21ActionSetLocoDrive extends Z21Action{
                 System.err.println("Constructing new SetLocoDrive action: Unknown speed step ID");
                 throw new RuntimeException("Wrong speed step ID");
         }
-        byte Adr_MSB;
-        byte Adr_LSB;
-        String binary = String.format("%16s", Integer.toBinaryString((Integer) objs[0])).replace(' ', '0');
-        String binaryMSB = binary.substring(0, 8);
-        String binaryLSB = binary.substring(8);
-
-        if (binary.replaceFirst ("^0*", "").toCharArray().length <= 8)
-            Adr_MSB = 0;
-        else
-            Adr_MSB = (byte) Integer.parseInt(binaryMSB, 2);
-        Adr_LSB = (byte) Integer.parseInt(binaryLSB, 2);
-        //Modify highest bits for bigger loco address support
-        if ((Integer) objs[0] > 127){
+        byte Adr_MSB = (byte) (((Integer)objs[0]) >> 8);
+        byte Adr_LSB = (byte) (((Integer)objs[0]) & 0b11111111);
+        if (Adr_MSB != 0){
             Adr_MSB |= 0b11000000;
         }
         byteRepresentation.add(Adr_MSB);
         byteRepresentation.add(Adr_LSB);
-        
-        /*boolean [] speedAndDirection = fromByte((Byte) objs[1]);
-        speedAndDirection[0] = (Boolean) objs[3];
-        byteRepresentation.add((byte)((speedAndDirection[0]?1<<7:0) + (speedAndDirection[1]?1<<6:0) + (speedAndDirection[2]?1<<5:0) +
-                (speedAndDirection[3]?1<<4:0) + (speedAndDirection[4]?1<<3:0) + (speedAndDirection[5]?1<<2:0) +
-                (speedAndDirection[6]?1<<1:0) + (speedAndDirection[7]?1:0)));*/
+
         int speedAndDirection = (Byte) objs[1];
         if ((Boolean)objs[3]){
             speedAndDirection |= 0b10000000;
