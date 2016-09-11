@@ -28,6 +28,9 @@ public class Z21ActionGetLocoInfo extends Z21Action{
         byteRepresentation.add((byte)(int)Integer.decode("0xF0"));
         byte Adr_MSB = (byte) (((Integer)objs[0]) >> 8);
         byte Adr_LSB = (byte) (((Integer)objs[0]) & 0b11111111);
+        if (Adr_MSB != 0){
+            Adr_MSB |= 0b11000000;
+        }
 
         byteRepresentation.add(Adr_MSB);
         byteRepresentation.add(Adr_LSB);

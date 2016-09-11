@@ -27,18 +27,12 @@ public class Z21ActionLanXCVPomWriteByte extends Z21Action{
         byteRepresentation.add((byte) 0xE6); // X-Header
         byteRepresentation.add(Byte.decode("0x30")); // DB 0
 
-        // Adding Loco-Addr
-        byte Adr_MSB;
-        byte Adr_LSB;
-        String binary = String.format("%16s", Integer.toBinaryString((Integer) objs[0])).replace(' ', '0');
-        String binaryMSB = binary.substring(0, 8);
-        String binaryLSB = binary.substring(8);
-
-        if (binary.replaceFirst ("^0*", "").toCharArray().length <= 8)
-            Adr_MSB = 0;
-        else
-            Adr_MSB = (byte) Integer.parseInt(binaryMSB, 2);
-        Adr_LSB = (byte) Integer.parseInt(binaryLSB, 2);
+        // Adding Loco-Address
+        byte Adr_MSB = (byte) (((Integer)objs[0]) >> 8);
+        byte Adr_LSB = (byte) (((Integer)objs[0]) & 0b11111111);
+        if (Adr_MSB != 0){
+            Adr_MSB |= 0b11000000;
+        }
         byteRepresentation.add((byte) (Adr_MSB)); // DB 1
         byteRepresentation.add(Adr_LSB); // DB 2
         
