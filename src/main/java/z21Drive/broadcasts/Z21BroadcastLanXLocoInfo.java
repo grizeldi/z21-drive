@@ -2,6 +2,7 @@ package z21Drive.broadcasts;
 
 /**
  * Probably the most important broadcast, because it represents the current state of a loco.
+ * Supports up to 28 functions.
  */
 public class Z21BroadcastLanXLocoInfo extends Z21Broadcast{
     private int locoAddress;
