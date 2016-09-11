@@ -15,6 +15,6 @@ deploy:
   skip_cleanup: true
   file_glob: true
   on:
-    #tags: true
+    tags: true
     repo: grizeldi/z21-drive
     branch: main
