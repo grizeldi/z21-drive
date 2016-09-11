@@ -14,5 +14,6 @@ deploy:
   file: build/libs/*
   skip_cleanup: true
   on:
+    tags: true
     repo: grizeldi/z21-drive
     branch: main
