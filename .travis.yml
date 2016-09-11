@@ -13,7 +13,8 @@ deploy:
     secure: mtcdDxenaMFu+hijphBl2XnH942HXltBA8pXPrxJRwwRliV+FtZxjTeETzF9vyodt0jc8JM39hHkTfi5fXi8RLWvIvWRkOkFEpxIPQYj9lAei2+AcgLo9uYbXhjr9jhZpMBLld4LrslHDxbMKIheJrjuB27Zxf95nosDwECpBrh0A2RPTCiTGMKY8CeazfzdCmKR3Bk+qnOIqO4AA3RzrK7NCPHBzqETjhdXkXpZCW+Lfnzdtn8/SRTVI7kCeFW0o6jqCPM55ajIioi6zvAKL3TkW+/AAmIq7Lj5vwjmFjC5IWf/4MQVmJNq44oEjaz2bzVYtMSmLm6ORqo6ZXCFLYEI+ZTjr4lDN/+x9uMKU0/1AbdUg9P46NldK5DhX7IZiNUvzBGTbJ5XOhRHlVMC39m09fhYj+TUsdbY2G0nPRhTd4RnMmtwXKb4n+dbGL1PM8Nl2uBcaIielwAN+RPx1y5C91CXJwpjgmoeRtDz7pL5ZEelCb/Dje2uCOFivKzp6N02sgBEoAKlCGS5hWEGS44pcKvhc/qmeBUUmnfeupkaXojh4qEYtsAAiva3VSzjszJoUczY2CEg5QmhX1itr6qb6QVHlxP4gWlDc+rF++qWJyG2l19DosoR27vK+zMEEWBHshsp77IopyDVEWwFE2WrWY+ZDSuj6bDXOWJKv3k=
   file: build/libs/*
   skip_cleanup: true
+  file_glob: true
   on:
-    tags: true
+    #tags: true
     repo: grizeldi/z21-drive
     branch: main
