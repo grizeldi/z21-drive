@@ -28,5 +28,5 @@ and you are good to go. Releases are at the moment not published very often so y
 want to build from source. In that case you just have to execute gradle build.
 
 ## Projects using this library
- * My piThrottle cab controller
+ * My [piThrottle cab](https://www.youtube.com/watch?v=QLCxUc9zQ6g) controller
  * LittleYoda's ESU [decoder programmer](https://github.com/littleyoda/ly-Z21-Tool)
