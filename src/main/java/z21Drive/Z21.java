@@ -221,7 +221,7 @@ class PacketConverter {
         if (data[data[0] + 1] != 0){
             //We got two messages in one packet.
             //Don't know yet what to do. TODO
-            Logger.getLogger("Z21 Receiver").info("Received two messages in one packet. Multiple messages not supported yet.");
+            Logger.getLogger("Z21 Receiver").info("Received two messages in one packet. Multiple messages not supported yet. Please report to github.");
         }
 
         if (header1 == 0x40 && header2 == 0x00 && xHeader == 239)
@@ -234,6 +234,8 @@ class PacketConverter {
             return new Z21BroadcastLanXTrackPowerOn(newArray);
         else if (header1 == 0x40 && header2 == 0x00 && xHeader == 0x61 && (data[5] & 255) == 0x02)
             return new Z21BroadcastLanXProgrammingMode(newArray);
+        else if (header1 == 0x40 && header2 == 0x00 && xHeader == 0x61 && (data[5] & 255) == 0x08)
+            return new Z21BroadcastLanXShortCircuit(newArray);
         else {
             Logger.getLogger("Z21 Receiver").warning("Received unknown message. Array:");
             for (byte b : newArray)
