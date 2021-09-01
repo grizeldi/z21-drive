@@ -120,16 +120,22 @@ public class Z21 implements Runnable{
                         }
                     }
                 }else {
-                    Z21Broadcast broadcast = PacketConverter.broadcastFromPacket(packet);
-                    if (broadcast != null) {
-                        for (Z21BroadcastListener listener : broadcastListeners){
-                            for (BroadcastTypes type : listener.getListenerTypes()){
-                                if (type == broadcast.boundType){
-                                    listener.onBroadCast(type, broadcast);
-                                }
-                            }
-                        }
-                    }
+                	
+                	ArrayList<Z21Broadcast> broadcasts = PacketConverter.broadcastFromPacket(packet);
+                	
+                	for (Z21Broadcast z21Broadcast : broadcasts)
+				    {
+                		if (z21Broadcast != null) 
+                		{
+                			for (Z21BroadcastListener listener : broadcastListeners){
+                				for (BroadcastTypes type : listener.getListenerTypes()){
+                					if (type == z21Broadcast.boundType){
+                						listener.onBroadCast(type, z21Broadcast);
+                					}
+                				}
+                			}
+                		}
+					}
                 }
             }catch (IOException e){
                 if (!exit)
@@ -210,41 +216,81 @@ class PacketConverter {
      * @param packet UDP packet received from Z21
      * @return Z21 broadcast object which represents the broadcast sent from Z21.
      */
-    static Z21Broadcast broadcastFromPacket(DatagramPacket packet){
+    static ArrayList<Z21Broadcast> broadcastFromPacket(DatagramPacket packet){
+    	
+    	ArrayList<Z21Broadcast> broadcasts = new ArrayList<Z21Broadcast>();
         byte [] data = packet.getData();
-        //Get headers
-        byte header1 = data[2], header2 = data[3];
-        int xHeader = data[4] & 255;
-        //Discard all zeros
-        byte [] newArray = new byte[data[0]];
-        System.arraycopy(data, 0, newArray, 0, newArray.length);
-        if (data[data[0] + 1] != 0){
-            //We got two messages in one packet.
-            //Don't know yet what to do. TODO
-            Logger.getLogger("Z21 Receiver").info("Received two messages in one packet. Multiple messages not supported yet. Please report to github.");
-        }
+        //byte [] data = new byte[] {9,0,0x40,0,0x61,0,1,1,1,8,0,0x40,0,0x61,1,2,2,10,0,0x40,0,0x61,0,2,3,3,3};
+        
+        int state = 0;
+        int len = 0;
+        int offset = 0;
+        byte tmpLow = 0;
 
-        if (header1 == 0x40 && header2 == 0x00 && xHeader == 239)
-            return new Z21BroadcastLanXLocoInfo(newArray);
-        else if (header1 == 0x40 && header2 == 0x00 && xHeader == 0x61 && (data[5] & 255) == 0x82)
-            return new Z21BroadcastLanXUnknownCommand(newArray);
-        else if (header1 == 0x40 && header2 == 0x00 && xHeader == 0x61 && (data[5] & 255) == 0x00)
-            return new Z21BroadcastLanXTrackPowerOff(newArray);
-        else if (header1 == 0x40 && header2 == 0x00 && xHeader == 0x61 && (data[5] & 255) == 0x01)
-            return new Z21BroadcastLanXTrackPowerOn(newArray);
-        else if (header1 == 0x40 && header2 == 0x00 && xHeader == 0x61 && (data[5] & 255) == 0x02)
-            return new Z21BroadcastLanXProgrammingMode(newArray);
-        else if (header1 == 0x40 && header2 == 0x00 && xHeader == 0x61 && (data[5] & 255) == 0x08)
-            return new Z21BroadcastLanXShortCircuit(newArray);
-        else {
-            Logger.getLogger("Z21 Receiver").warning("Received unknown message. Array:");
-            for (byte b : newArray)
-                System.out.print("0x" + String.format("%02X ", b));
-            System.out.println();
-        }
-        return null;
+        byte [] newArray = null;
+        
+        //split the data array into multiples newArray, then add them into ArrayList<Z21Broadcast>
+        for(int i=0; i<data.length; i++)
+        {
+        	switch (state)
+    		{
+    		case 0: //lenght low
+    			tmpLow = data[i];
+    			state ++;
+    			break;
+    			
+    		case 1: //lenght high
+    			len = data[i] & 0xff;
+    			len <<= 8;
+    			len |= tmpLow & 0xff;
+    			
+    			//populate newArray 
+    			newArray = new byte[len];
+    			System.arraycopy(data, i-1, newArray, 0, newArray.length);
+    			state ++;
+    			break;
+
+    		case 2://wait for all bytes of the single packet
+    			if(i>=(offset+len-1))
+    			{
+    		        if (newArray[2] == 0x40 && newArray[3] == 0x00 && newArray[4] == 239)
+    		        	broadcasts.add(new Z21BroadcastLanXLocoInfo(newArray));
+    		        else if (newArray[2] == 0x40 && newArray[3] == 0x00 && newArray[4] == 0x61 && (newArray[5] & 255) == 0x82)
+    		        	broadcasts.add(new Z21BroadcastLanXUnknownCommand(newArray));
+    		        else if (newArray[2] == 0x40 && newArray[3] == 0x00 && newArray[4] == 0x61 && (newArray[5] & 255) == 0x00)
+    		        	broadcasts.add(new Z21BroadcastLanXTrackPowerOff(newArray));
+    		        else if (newArray[2] == 0x40 && newArray[3] == 0x00 && newArray[4] == 0x61 && (newArray[5] & 255) == 0x01)
+    		        	broadcasts.add(new Z21BroadcastLanXTrackPowerOn(newArray));
+    		        else if (newArray[2] == 0x40 && newArray[3] == 0x00 && newArray[4] == 0x61 && (newArray[5] & 255) == 0x02)
+    		        	broadcasts.add(new Z21BroadcastLanXProgrammingMode(newArray));
+    		        else if (newArray[2] == 0x40 && newArray[3] == 0x00 && newArray[4] == 0x61 && (newArray[5] & 255) == 0x08)
+    		        	broadcasts.add(new Z21BroadcastLanXShortCircuit(newArray));
+    		        else {
+    		            Logger.getLogger("Z21 Receiver").warning("Received unknown message. Array:");
+    		            for (byte b : newArray)
+    		                System.out.print("0x" + String.format("%02X ", b));
+    		            System.out.println();
+    		        }
+    		        
+    		        //reset variables for restart
+    		        offset += len; //next packet is from offset to new lenght
+    		        
+    		        len = 0;
+    		        tmpLow = 0;
+    		        newArray = null;
+    		        
+    		        //ready for new z21 next packet
+    				state = 0;
+    			}
+    			break;
+    											
+    		default:
+    			break;
+    		}
+        }    
+
+        return broadcasts;
     }
-
     /**
      * Unboxes Byte array to a primitive byte array.
      * @param in Byte array to primitivize
