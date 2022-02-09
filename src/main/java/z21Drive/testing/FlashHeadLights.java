@@ -4,6 +4,8 @@ import z21Drive.LocoAddressOutOfRangeException;
 import z21Drive.Z21;
 import z21Drive.actions.Z21ActionSetLocoFunction;
 
+import java.util.logging.Logger;
+
 /**
  * Used to test if setLocoFunction works.
  * If it's working properly, loco keeps it's headlights flashing.
@@ -34,8 +36,10 @@ public class FlashHeadLights implements Runnable{
         Z21 z21 = Z21.instance;
         while (!exit){
             try {
+                Logger.getLogger("FlashHeadLights").info("Headlight on.");
                 z21.sendActionToZ21(new Z21ActionSetLocoFunction(LOCO_ADDRESS, 0, true));
                 Thread.sleep(2000);
+                Logger.getLogger("FlashHeadLights").info("Headlight off.");
                 z21.sendActionToZ21(new Z21ActionSetLocoFunction(LOCO_ADDRESS, 0, false));
                 Thread.sleep(2000);
             } catch (LocoAddressOutOfRangeException e) {

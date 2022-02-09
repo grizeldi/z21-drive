@@ -4,6 +4,8 @@ import z21Drive.LocoAddressOutOfRangeException;
 import z21Drive.Z21;
 import z21Drive.actions.Z21ActionSetLocoDrive;
 
+import java.util.logging.Logger;
+
 /**
  * Used to test loco driving functionality.
  * Loco is supposed to drive forward and backward for 30 seconds.
@@ -38,8 +40,10 @@ public class BackAndForth implements Runnable{
             try {
                 int speed = 20;
                 int speedStepsID = 3;
+                Logger.getLogger("BackAndForth").info("Drive backward.");
                 z21.sendActionToZ21(new Z21ActionSetLocoDrive(LOCO_ADDRESS, speed, speedStepsID, true));
                 Thread.sleep(3000);
+                Logger.getLogger("BackAndForth").info("Drive forward.");
                 z21.sendActionToZ21(new Z21ActionSetLocoDrive(LOCO_ADDRESS, speed, speedStepsID, false));
                 Thread.sleep(3000);
             } catch (LocoAddressOutOfRangeException e) {

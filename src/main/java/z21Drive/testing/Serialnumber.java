@@ -24,10 +24,11 @@ public class Serialnumber implements Runnable{
 			@Override
 			public void responseReceived(ResponseTypes type, Z21Response response) {
 				if (type != ResponseTypes.LAN_GET_SERIAL_NUMBER_RESPONSE){
+					System.out.println("Received invalid response: " + type.name());
 					return;
 				}
 				Z21ResponseGetSerialNumber number = (Z21ResponseGetSerialNumber) response;
-				System.out.println("Received Response: " + number.serialNumber);
+				System.out.println("Received response: " + number.serialNumber);
 			}
 
 			@Override

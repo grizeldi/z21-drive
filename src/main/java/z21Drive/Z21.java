@@ -38,7 +38,7 @@ public class Z21 implements Runnable{
 
     private Z21(String host) {
         this.host = host;
-        Logger.getLogger("Z21 init").info("Z21 initializing");
+        Logger.getLogger("Z21 init").info("Z21 initializing ...");
         Thread listenerThread = new Thread(this);
         try {
             socket = new DatagramSocket(port);
@@ -65,6 +65,7 @@ public class Z21 implements Runnable{
         initKeepAliveTimer();
         //Make sure z21 shuts down communication gracefully
         Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown));
+        Logger.getLogger("Z21 init").info("Z21 initialization done.");
     }
 
     /**
