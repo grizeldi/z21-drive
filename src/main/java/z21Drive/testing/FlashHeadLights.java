@@ -11,6 +11,7 @@ import z21Drive.actions.Z21ActionSetLocoFunction;
  * @author grizeldi
  */
 public class FlashHeadLights implements Runnable{
+    public static final int LOCO_ADDRESS = 3;
     private boolean exit;
 
     public static void main(String [] args){
@@ -33,9 +34,9 @@ public class FlashHeadLights implements Runnable{
         Z21 z21 = Z21.instance;
         while (!exit){
             try {
-                z21.sendActionToZ21(new Z21ActionSetLocoFunction(5, 0, true));
+                z21.sendActionToZ21(new Z21ActionSetLocoFunction(LOCO_ADDRESS, 0, true));
                 Thread.sleep(2000);
-                z21.sendActionToZ21(new Z21ActionSetLocoFunction(5, 0, false));
+                z21.sendActionToZ21(new Z21ActionSetLocoFunction(LOCO_ADDRESS, 0, false));
                 Thread.sleep(2000);
             } catch (LocoAddressOutOfRangeException e) {
                 e.printStackTrace();

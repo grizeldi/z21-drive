@@ -10,6 +10,7 @@ import z21Drive.actions.Z21ActionSetLocoDrive;
  * @see z21Drive.actions.Z21ActionSetLocoDrive
  */
 public class BackAndForth implements Runnable{
+    public static final int LOCO_ADDRESS = 3;
     private boolean exit;
 
     public static void main(String[] yoMama){
@@ -35,9 +36,11 @@ public class BackAndForth implements Runnable{
         Z21 z21 = Z21.instance;
         while (!exit){
             try {
-                z21.sendActionToZ21(new Z21ActionSetLocoDrive(5, 20, 3, true));
+                int speed = 20;
+                int speedStepsID = 3;
+                z21.sendActionToZ21(new Z21ActionSetLocoDrive(LOCO_ADDRESS, speed, speedStepsID, true));
                 Thread.sleep(3000);
-                z21.sendActionToZ21(new Z21ActionSetLocoDrive(5, 20, 3, false));
+                z21.sendActionToZ21(new Z21ActionSetLocoDrive(LOCO_ADDRESS, speed, speedStepsID, false));
                 Thread.sleep(3000);
             } catch (LocoAddressOutOfRangeException e) {
                 e.printStackTrace();
@@ -46,7 +49,7 @@ public class BackAndForth implements Runnable{
             }
         }
         try {
-            z21.sendActionToZ21(new Z21ActionSetLocoDrive(5, 0, 3, false));
+            z21.sendActionToZ21(new Z21ActionSetLocoDrive(LOCO_ADDRESS, 0, 3, false));
         } catch (LocoAddressOutOfRangeException e) {
             e.printStackTrace();
         }
