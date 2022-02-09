@@ -21,6 +21,7 @@ import z21Drive.responses.*;
  * Main class in this library which represents Z21 and handles all communication with it.
  * @author grizeldi
  */
+@SuppressWarnings("LocalCanBeFinal")
 public class Z21 implements Runnable{
     public static final Z21 instance = new Z21();
     private static final String host = "192.168.0.111";
