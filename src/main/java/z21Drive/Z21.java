@@ -24,15 +24,20 @@ import z21Drive.responses.*;
 @SuppressWarnings("LocalCanBeFinal")
 public class Z21 implements Runnable{
     public static final Z21 instance = new Z21();
-    private static final String host = "192.168.0.111";
     private static final int port = 21105;
     private boolean exit = false;
     private List<Z21ResponseListener> responseListeners = new ArrayList<Z21ResponseListener>();
     private List<Z21BroadcastListener> broadcastListeners = new ArrayList<Z21BroadcastListener>();
     private DatagramSocket socket;
-	private final Timer keepAliveTimer;
+	  private final Timer keepAliveTimer;
+    private final String host;
 
     private Z21() {
+        this("192.168.188.2");
+    }
+
+    private Z21(String host) {
+        this.host = host;
         Logger.getLogger("Z21 init").info("Z21 initializing");
         Thread listenerThread = new Thread(this);
         try {
