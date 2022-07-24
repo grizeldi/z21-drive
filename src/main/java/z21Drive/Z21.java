@@ -23,7 +23,7 @@ import z21Drive.responses.*;
  */
 public class Z21 implements Runnable{
     public static final Z21 instance = new Z21();
-    private static final String host = "192.168.0.111";
+    private static final String host = "192.168.0.90";
     private static final int port = 21105;
     private boolean exit = false;
     private List<Z21ResponseListener> responseListeners = new ArrayList<Z21ResponseListener>();
@@ -236,6 +236,8 @@ class PacketConverter {
             return new Z21BroadcastLanXProgrammingMode(newArray);
         else if (header1 == 0x40 && header2 == 0x00 && xHeader == 0x61 && (data[5] & 255) == 0x08)
             return new Z21BroadcastLanXShortCircuit(newArray);
+        else if (header1 == 0x40 && header2 == 0x00 && xHeader == 0x43)
+            return new Z21BroadcastLanXTurnoutsInfo(newArray);
         else {
             Logger.getLogger("Z21 Receiver").warning("Received unknown message. Array:");
             for (byte b : newArray)
